@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.goplayer</groupId>
+  <artifactId>goplayer-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+	<name>Go Player</name>
+	<description>Go player.</description>
+	<inceptionYear>2011</inceptionYear>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/Sazaju/Go-Player/issues/</url>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>BSD</name>
+			<url>http://www.freebsd.org/copyright/license.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Matthieu Vergne</name>
+			<email>matthieu_DOT_vergne@(nospam)gmail_DOT_com</email>
+			<url>https://github.com/Sazaju</url>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git://github.com/Sazaju/Go-Player.git</connection>
+		<developerConnection>scm:git:git@github.com:${github.username}/Go-Player.git</developerConnection>
+		<url>https://github.com/Sazaju/Go-Player</url>
+	</scm>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+  <modules>
+  	<module>goplayer-core</module>
+  	<module>goplayer-samples</module>
+  </modules>
+</project>
