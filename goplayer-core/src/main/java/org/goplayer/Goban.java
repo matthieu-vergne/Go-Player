@@ -64,7 +64,7 @@ public class Goban {
 				: player == whitePlayer ? PlayerColor.WHITE : null;
 	}
 
-	private PlayerColor[][] copyField() {
+	public PlayerColor[][] copyField() {
 		PlayerColor[][] copy = new PlayerColor[width][height];
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
@@ -92,7 +92,7 @@ public class Goban {
 	}
 
 	public PlayerColor[][] getField() {
-		return copyField();
+		return field;
 	}
 
 	public int getWidth() {

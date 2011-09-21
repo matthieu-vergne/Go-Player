@@ -104,6 +104,11 @@ public class GobanTest {
 	}
 
 	@Test
+	public void testFieldCopy() {
+		fail("Not implemented yet.");
+	}
+
+	@Test
 	public void testPreviousField() {
 		fail("Not implemented yet.");
 	}
