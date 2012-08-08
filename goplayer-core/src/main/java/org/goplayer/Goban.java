@@ -25,7 +25,7 @@ public class Goban {
 
 	public void placeHandicap(PlayerColor color, int x, int y) {
 		if (field[x][y] != null) {
-			throw new IllegalArgumentException("Another ishi is on (" + x + ","
+			throw new IllegalArgumentException("Another stone is on (" + x + ","
 					+ y + ").");
 		} else if (isPlaying) {
 			throw new IllegalStateException(
@@ -35,7 +35,7 @@ public class Goban {
 		}
 	}
 
-	public int placeIshiFor(Player player, int x, int y) {
+	public int placeStoneFor(Player player, int x, int y) {
 		if (field[x][y] != null) {
 			throw new IllegalArgumentException("(" + x + "," + y
 					+ ") is already taken by " + field[x][y] + ".");
