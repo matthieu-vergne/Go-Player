@@ -8,7 +8,7 @@ public class Goban {
 		this(size, size);
 	}
 
-	public Goban(int colCount, int rowCount) {
+	public Goban(int rowCount, int colCount) {
 		if (colCount > 0) {
 			if (rowCount > 0) {
 				field = new Stone[rowCount][colCount];

@@ -51,7 +51,7 @@ public class GobanTest {
 	public void testRectangleGobanSize() {
 		for (int colCount : new int[] { 9, 13, 19 }) {
 			for (int rowCount : new int[] { 9, 13, 19 }) {
-				Goban goban = new Goban(colCount, rowCount);
+				Goban goban = new Goban(rowCount, colCount);
 				assertEquals(colCount, goban.getColCount());
 				assertEquals(rowCount, goban.getRowCount());
 			}
