@@ -13,6 +13,8 @@ import org.goplayer.move.IMove;
 import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
 
+// TODO manage prisoners removing
+// TODO manage ko rule
 public class Game {
 
 	private final Goban goban;
