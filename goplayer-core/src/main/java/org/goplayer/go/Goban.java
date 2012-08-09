@@ -8,25 +8,25 @@ public class Goban {
 		this(size, size);
 	}
 
-	public Goban(int width, int height) {
-		if (width > 0) {
-			if (height > 0) {
-				field = new Stone[height][width];
+	public Goban(int colCount, int rowCount) {
+		if (colCount > 0) {
+			if (rowCount > 0) {
+				field = new Stone[rowCount][colCount];
 			} else {
 				throw new IllegalArgumentException(
-						"The height must be strictly positive: " + height);
+						"The number of rows must be strictly positive: " + rowCount);
 			}
 		} else {
 			throw new IllegalArgumentException(
-					"The width must be strictly positive: " + width);
+					"The number of columns must be strictly positive: " + colCount);
 		}
 	}
 
-	public int getWidth() {
+	public int getColCount() {
 		return field[0].length;
 	}
 
-	public int getHeight() {
+	public int getRowCount() {
 		return field.length;
 	}
 

@@ -42,18 +42,18 @@ public class GobanTest {
 		for (int size : new int[] { 9, 13, 19, r.nextInt(30), r.nextInt(30),
 				r.nextInt(30) }) {
 			Goban goban = new Goban(size);
-			assertEquals(size, goban.getWidth());
-			assertEquals(size, goban.getHeight());
+			assertEquals(size, goban.getColCount());
+			assertEquals(size, goban.getRowCount());
 		}
 	}
 
 	@Test
 	public void testRectangleGobanSize() {
-		for (int width : new int[] { 9, 13, 19 }) {
-			for (int height : new int[] { 9, 13, 19 }) {
-				Goban goban = new Goban(width, height);
-				assertEquals(width, goban.getWidth());
-				assertEquals(height, goban.getHeight());
+		for (int colCount : new int[] { 9, 13, 19 }) {
+			for (int rowCount : new int[] { 9, 13, 19 }) {
+				Goban goban = new Goban(colCount, rowCount);
+				assertEquals(colCount, goban.getColCount());
+				assertEquals(rowCount, goban.getRowCount());
 			}
 		}
 	}

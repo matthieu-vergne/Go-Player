@@ -101,8 +101,8 @@ public class GameTest {
 	static class TestPlayer implements IPlayer {
 		@Override
 		public IMove play(Goban goban) {
-			for (int row = 0; row < goban.getHeight(); row++) {
-				for (int col = 0; col < goban.getWidth(); col++) {
+			for (int row = 0; row < goban.getRowCount(); row++) {
+				for (int col = 0; col < goban.getColCount(); col++) {
 					if (goban.getCoordContent(row, col) == null) {
 						return new StoneMove(row, col);
 					} else {
