@@ -93,4 +93,20 @@ public class GobanTest {
 		}
 	}
 
+	@Test
+	public void testFullGobanCreation() {
+		int rowCount = 3;
+		int colCount = 5;
+		PlayerColor color = PlayerColor.BLACK;
+		Goban goban = Goban.createFullGoban(rowCount, colCount, color);
+		assertEquals(rowCount, goban.getRowCount());
+		assertEquals(colCount, goban.getColCount());
+		for (int row = 0; row < rowCount; row++) {
+			for (int col = 0; col < colCount; col++) {
+				Stone stone = goban.getCoordContent(row, col);
+				assertNotNull(stone);
+				assertEquals(color, stone.getColor());
+			}
+		}
+	}
 }

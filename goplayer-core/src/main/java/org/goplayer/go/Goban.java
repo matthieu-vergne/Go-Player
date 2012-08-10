@@ -1,5 +1,7 @@
 package org.goplayer.go;
 
+import org.goplayer.game.PlayerColor;
+
 public class Goban {
 
 	private final Stone[][] field;
@@ -38,4 +40,14 @@ public class Goban {
 		field[row][col] = stone;
 	}
 
+	public static Goban createFullGoban(int rowCount, int colCount,
+			PlayerColor color) {
+		Goban goban = new Goban(rowCount, colCount);
+		for (int row = 0; row < rowCount; row++) {
+			for (int col = 0; col < colCount; col++) {
+				goban.setCoordContent(row, col, new Stone(color));
+			}
+		}
+		return goban;
+	}
 }
