@@ -1,5 +1,6 @@
 package org.goplayer.go;
 
+import org.goplayer.util.Coord;
 
 public class Goban {
 
@@ -39,6 +40,19 @@ public class Goban {
 
 	public void setCoordContent(int row, int col, Stone stone) {
 		field[row][col] = stone;
+	}
+	
+	public Coord getStoneCoord(Stone stone) {
+		for (int row = 0; row < field.length; row++) {
+			for (int col = 0; col < field[0].length; col++) {
+				if (stone == field[row][col]) {
+					return new Coord(row, col);
+				} else {
+					continue;
+				}
+			}
+		}
+		throw new IllegalArgumentException("The given stone is not on this goban.");
 	}
 
 	public static Goban createFullGoban(int rowCount, int colCount,

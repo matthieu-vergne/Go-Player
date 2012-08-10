@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Random;
 
+import org.goplayer.util.Coord;
 import org.junit.Test;
 
 public class GobanTest {
@@ -105,6 +106,18 @@ public class GobanTest {
 				Stone stone = goban.getCoordContent(row, col);
 				assertNotNull(stone);
 				assertEquals(color, stone.getColor());
+			}
+		}
+	}
+
+	@Test
+	public void testStoneCoord() {
+		int size = 5;
+		Goban goban = Goban.createFullGoban(size, size, StoneColor.BLACK);
+		for (int row = 0; row < size; row++) {
+			for (int col = 0; col < size; col++) {
+				assertEquals(new Coord(row, col),
+						goban.getStoneCoord(goban.getCoordContent(row, col)));
 			}
 		}
 	}
