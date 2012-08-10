@@ -1,6 +1,5 @@
 package org.goplayer.go;
 
-import org.goplayer.game.PlayerColor;
 
 public class Goban {
 
@@ -43,7 +42,7 @@ public class Goban {
 	}
 
 	public static Goban createFullGoban(int rowCount, int colCount,
-			PlayerColor color) {
+			StoneColor color) {
 		Goban goban = new Goban(rowCount, colCount);
 		for (int row = 0; row < rowCount; row++) {
 			for (int col = 0; col < colCount; col++) {

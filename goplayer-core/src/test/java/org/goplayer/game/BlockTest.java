@@ -10,15 +10,16 @@ import java.util.Map;
 import org.goplayer.Coord;
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
+import org.goplayer.go.StoneColor;
 import org.junit.Test;
 
 public class BlockTest {
 
 	@Test
 	public void testCollectionInitialization() {
-		Stone s1 = new Stone(PlayerColor.BLACK);
-		Stone s2 = new Stone(PlayerColor.BLACK);
-		Stone s3 = new Stone(PlayerColor.BLACK);
+		Stone s1 = new Stone(StoneColor.BLACK);
+		Stone s2 = new Stone(StoneColor.BLACK);
+		Stone s3 = new Stone(StoneColor.BLACK);
 		Collection<Stone> stones = Arrays.asList(s1, s2, s3);
 		Block block = new Block(stones);
 		assertEquals(3, block.getStones().size());
@@ -29,9 +30,9 @@ public class BlockTest {
 
 	@Test
 	public void testArgumentsInitialization() {
-		Stone s1 = new Stone(PlayerColor.BLACK);
-		Stone s2 = new Stone(PlayerColor.BLACK);
-		Stone s3 = new Stone(PlayerColor.BLACK);
+		Stone s1 = new Stone(StoneColor.BLACK);
+		Stone s2 = new Stone(StoneColor.BLACK);
+		Stone s3 = new Stone(StoneColor.BLACK);
 		Block block = new Block(s1, s2, s3);
 		assertEquals(3, block.getStones().size());
 		assertTrue(block.getStones().contains(s1));
@@ -42,7 +43,7 @@ public class BlockTest {
 	@Test
 	public void testGenerationFromFreePlace() {
 		int size = 5;
-		Goban goban = Goban.createFullGoban(size, size, PlayerColor.BLACK);
+		Goban goban = Goban.createFullGoban(size, size, StoneColor.BLACK);
 		int startRow = 2;
 		int startCol = 3;
 		goban.setCoordContent(startRow, startCol, null);// free the actual place
@@ -53,7 +54,7 @@ public class BlockTest {
 	@Test
 	public void testGenerationFromIsolatedPlace() {
 		int size = 5;
-		Goban goban = Goban.createFullGoban(size, size, PlayerColor.BLACK);
+		Goban goban = Goban.createFullGoban(size, size, StoneColor.BLACK);
 		int startRow = 2;
 		int startCol = 3;
 
@@ -72,7 +73,7 @@ public class BlockTest {
 	@Test
 	public void testGenerationFromFullPlace() {
 		int size = 5;
-		Goban goban = Goban.createFullGoban(size, size, PlayerColor.BLACK);
+		Goban goban = Goban.createFullGoban(size, size, StoneColor.BLACK);
 		int startRow = 2;
 		int startCol = 3;
 
@@ -89,17 +90,17 @@ public class BlockTest {
 	@Test
 	public void testGenerationFromCustomBlock() {
 		int size = 5;
-		Goban goban = Goban.createFullGoban(size, size, PlayerColor.BLACK);
+		Goban goban = Goban.createFullGoban(size, size, StoneColor.BLACK);
 
 		// create custom white block
 		Map<Coord, Stone> target = new HashMap<Coord, Stone>();
-		target.put(new Coord(1, 3), new Stone(PlayerColor.WHITE));
-		target.put(new Coord(2, 2), new Stone(PlayerColor.WHITE));
-		target.put(new Coord(2, 3), new Stone(PlayerColor.WHITE));
-		target.put(new Coord(2, 4), new Stone(PlayerColor.WHITE));
-		target.put(new Coord(3, 4), new Stone(PlayerColor.WHITE));
-		target.put(new Coord(4, 4), new Stone(PlayerColor.WHITE));
-		target.put(new Coord(4, 3), new Stone(PlayerColor.WHITE));
+		target.put(new Coord(1, 3), new Stone(StoneColor.WHITE));
+		target.put(new Coord(2, 2), new Stone(StoneColor.WHITE));
+		target.put(new Coord(2, 3), new Stone(StoneColor.WHITE));
+		target.put(new Coord(2, 4), new Stone(StoneColor.WHITE));
+		target.put(new Coord(3, 4), new Stone(StoneColor.WHITE));
+		target.put(new Coord(4, 4), new Stone(StoneColor.WHITE));
+		target.put(new Coord(4, 3), new Stone(StoneColor.WHITE));
 
 		// fill block
 		for (Map.Entry<Coord, Stone> entry : target.entrySet()) {
@@ -110,9 +111,9 @@ public class BlockTest {
 		}
 
 		// add whites which touch only
-		goban.setCoordContent(0, 0, new Stone(PlayerColor.WHITE));
-		goban.setCoordContent(1, 1, new Stone(PlayerColor.WHITE));
-		goban.setCoordContent(3, 1, new Stone(PlayerColor.WHITE));
+		goban.setCoordContent(0, 0, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(1, 1, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(3, 1, new Stone(StoneColor.WHITE));
 
 		// check equivalence whatever we take as a start
 		for (Coord start : target.keySet()) {

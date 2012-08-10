@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.Random;
 
-import org.goplayer.game.PlayerColor;
 import org.junit.Test;
 
 public class GobanTest {
@@ -69,7 +68,7 @@ public class GobanTest {
 		}
 
 		{
-			Stone stone = new Stone(PlayerColor.BLACK);
+			Stone stone = new Stone(StoneColor.BLACK);
 			int row = 0;
 			int col = 0;
 			goban.setCoordContent(row, col, stone);
@@ -77,7 +76,7 @@ public class GobanTest {
 		}
 
 		{
-			Stone stone = new Stone(PlayerColor.BLACK);
+			Stone stone = new Stone(StoneColor.BLACK);
 			int row = 2;
 			int col = 3;
 			goban.setCoordContent(row, col, stone);
@@ -85,7 +84,7 @@ public class GobanTest {
 		}
 
 		{
-			Stone stone = new Stone(PlayerColor.BLACK);
+			Stone stone = new Stone(StoneColor.BLACK);
 			int row = 4;
 			int col = 1;
 			goban.setCoordContent(row, col, stone);
@@ -97,7 +96,7 @@ public class GobanTest {
 	public void testFullGobanCreation() {
 		int rowCount = 3;
 		int colCount = 5;
-		PlayerColor color = PlayerColor.BLACK;
+		StoneColor color = StoneColor.BLACK;
 		Goban goban = Goban.createFullGoban(rowCount, colCount, color);
 		assertEquals(rowCount, goban.getRowCount());
 		assertEquals(colCount, goban.getColCount());

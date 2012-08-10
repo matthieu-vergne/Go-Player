@@ -1,16 +1,15 @@
 package org.goplayer.go;
 
-import org.goplayer.game.PlayerColor;
 
 public class Stone {
 
-	private final PlayerColor color;
+	private final StoneColor color;
 
-	public Stone(PlayerColor color) {
+	public Stone(StoneColor color) {
 		this.color = color;
 	}
 
-	public PlayerColor getColor() {
+	public StoneColor getColor() {
 		return color;
 	}
 }

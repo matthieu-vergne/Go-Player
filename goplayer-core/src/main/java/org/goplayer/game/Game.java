@@ -8,6 +8,7 @@ import java.util.Map;
 import org.goplayer.exception.UnknownPlayerException;
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
+import org.goplayer.go.StoneColor;
 import org.goplayer.move.AbandonMove;
 import org.goplayer.move.IMove;
 import org.goplayer.move.PassMove;
@@ -19,34 +20,34 @@ import org.goplayer.player.IPlayer;
 public class Game {
 
 	private final Goban goban;
-	private final Map<PlayerColor, IPlayer> players = new HashMap<PlayerColor, IPlayer>();
-	private final Map<PlayerColor, Integer> prisoners = new HashMap<PlayerColor, Integer>();
-	private PlayerColor nextPlayerColor = PlayerColor.BLACK;
+	private final Map<StoneColor, IPlayer> players = new HashMap<StoneColor, IPlayer>();
+	private final Map<StoneColor, Integer> prisoners = new HashMap<StoneColor, Integer>();
+	private StoneColor nextPlayerColor = StoneColor.BLACK;
 	private boolean previousHasPassed = false;
 	private IPlayer winner = null;
 
 	public Game(Goban goban, IPlayer blackPlayer, IPlayer whitePlayer) {
 		this.goban = goban;
-		players.put(PlayerColor.BLACK, blackPlayer);
-		players.put(PlayerColor.WHITE, whitePlayer);
-		prisoners.put(PlayerColor.BLACK, 0);
-		prisoners.put(PlayerColor.WHITE, 0);
+		players.put(StoneColor.BLACK, blackPlayer);
+		players.put(StoneColor.WHITE, whitePlayer);
+		prisoners.put(StoneColor.BLACK, 0);
+		prisoners.put(StoneColor.WHITE, 0);
 	}
 
 	public Goban getGoban() {
 		return goban;
 	}
 
-	public IPlayer getPlayer(PlayerColor color) {
+	public IPlayer getPlayer(StoneColor color) {
 		return players.get(color);
 	}
 
-	public int getPrisoners(PlayerColor color) {
+	public int getPrisoners(StoneColor color) {
 		return prisoners.get(color);
 	}
 
-	public PlayerColor getPlayerColor(final IPlayer player) {
-		for (PlayerColor color : PlayerColor.values()) {
+	public StoneColor getPlayerColor(final IPlayer player) {
+		for (StoneColor color : StoneColor.values()) {
 			final IPlayer p1 = players.get(color);
 			if (p1 == player) {
 				return color;
@@ -57,7 +58,7 @@ public class Game {
 		throw new UnknownPlayerException(player);
 	}
 
-	public PlayerColor getNextPlayerColor() {
+	public StoneColor getNextPlayerColor() {
 		return nextPlayerColor;
 	}
 
@@ -110,14 +111,14 @@ public class Game {
 				throw new RuntimeException("Not managed case: "
 						+ move.getClass());
 			}
-			nextPlayerColor = nextPlayerColor == PlayerColor.BLACK ? PlayerColor.WHITE
-					: PlayerColor.BLACK;
+			nextPlayerColor = nextPlayerColor == StoneColor.BLACK ? StoneColor.WHITE
+					: StoneColor.BLACK;
 		}
 	}
 
 	private IPlayer computeWinner() {
 		// TODO compute winner using user feedback
-		return players.get(PlayerColor.BLACK);
+		return players.get(StoneColor.BLACK);
 	}
 
 	public IPlayer getWinner() {

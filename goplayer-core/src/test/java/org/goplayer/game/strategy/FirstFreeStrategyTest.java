@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Random;
 
 import org.goplayer.Coord;
-import org.goplayer.game.PlayerColor;
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
+import org.goplayer.go.StoneColor;
 import org.goplayer.move.IMove;
 import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
@@ -54,7 +54,7 @@ public class FirstFreeStrategyTest {
 							continue;
 						} else {
 							goban.setCoordContent(row, col, new Stone(
-									PlayerColor.BLACK));
+									StoneColor.BLACK));
 						}
 					}
 				}
@@ -79,7 +79,7 @@ public class FirstFreeStrategyTest {
 		Goban goban = new Goban(rowCount, colCount);
 		for (int row = 0; row < goban.getRowCount(); row++) {
 			for (int col = 0; col < goban.getColCount(); col++) {
-				goban.setCoordContent(row, col, new Stone(PlayerColor.BLACK));
+				goban.setCoordContent(row, col, new Stone(StoneColor.BLACK));
 			}
 		}
 
@@ -112,7 +112,7 @@ public class FirstFreeStrategyTest {
 		for (int i = 0; i < totalInstances / 2; i++) {
 			Coord coord = freePlaces.remove(rand.nextInt(freePlaces.size()));
 			goban.setCoordContent(coord.getRow(), coord.getCol(), new Stone(
-					PlayerColor.BLACK));
+					StoneColor.BLACK));
 		}
 
 		IPlayer player = new StrategicalPlayer(strategy);
@@ -124,7 +124,7 @@ public class FirstFreeStrategyTest {
 			assertEquals(expected.getRow(), actual.getRow());
 			assertEquals(expected.getCol(), actual.getCol());
 			goban.setCoordContent(actual.getRow(), actual.getCol(), new Stone(
-					PlayerColor.WHITE));
+					StoneColor.WHITE));
 			move = strategy.chooseMove(goban, player);
 		}
 		assertEquals(0, freePlaces.size());

@@ -1,4 +1,4 @@
-package org.goplayer.game;
+package org.goplayer.go;
 
 /**
  * This class identify the two colors of both Go players.
@@ -6,7 +6,7 @@ package org.goplayer.game;
  * @author Matthieu Vergne <matthieu.vergne@gmail.com>
  * 
  */
-public enum PlayerColor {
+public enum StoneColor {
 
 	BLACK, WHITE
 }

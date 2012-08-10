@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.goplayer.exception.UnknownPlayerException;
 import org.goplayer.go.Goban;
+import org.goplayer.go.StoneColor;
 import org.goplayer.move.AbandonMove;
 import org.goplayer.move.IMove;
 import org.goplayer.move.StoneMove;
@@ -19,8 +20,8 @@ public class GameTest {
 		IPlayer whitePlayer = new TestPlayer();
 		Game game = new Game(goban, blackPlayer, whitePlayer);
 		assertEquals(goban, game.getGoban());
-		assertEquals(blackPlayer, game.getPlayer(PlayerColor.BLACK));
-		assertEquals(whitePlayer, game.getPlayer(PlayerColor.WHITE));
+		assertEquals(blackPlayer, game.getPlayer(StoneColor.BLACK));
+		assertEquals(whitePlayer, game.getPlayer(StoneColor.WHITE));
 	}
 
 	@Test
@@ -30,8 +31,8 @@ public class GameTest {
 		IPlayer whitePlayer = new TestPlayer();
 		Game game = new Game(goban, blackPlayer, whitePlayer);
 		assertEquals(goban, game.getGoban());
-		assertEquals(PlayerColor.BLACK, game.getPlayerColor(blackPlayer));
-		assertEquals(PlayerColor.WHITE, game.getPlayerColor(whitePlayer));
+		assertEquals(StoneColor.BLACK, game.getPlayerColor(blackPlayer));
+		assertEquals(StoneColor.WHITE, game.getPlayerColor(whitePlayer));
 		try {
 			game.getPlayerColor(new TestPlayer());
 			fail("No exception thrown for unknown player");

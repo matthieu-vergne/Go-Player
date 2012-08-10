@@ -11,6 +11,7 @@ import java.util.Set;
 import org.goplayer.Coord;
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
+import org.goplayer.go.StoneColor;
 
 // TODO implement contiguous block
 public class Block {
@@ -46,7 +47,7 @@ public class Block {
 			}
 			
 			check.add(new Coord(startRow, startCol));
-			PlayerColor refColor = reference.getColor();
+			StoneColor refColor = reference.getColor();
 			while (!check.isEmpty()) {
 				Coord coord = check.remove(0);
 				int row = coord.getRow();
