@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ import org.goplayer.go.Stone;
 import org.goplayer.go.StoneColor;
 import org.goplayer.util.Coord;
 
-public class Block {
+public class Block implements Iterable<Stone> {
 	private final Set<Stone> stones;
 
 	public Block(Collection<Stone> stones) {
@@ -66,5 +67,10 @@ public class Block {
 			}
 		}
 		return new Block(stones);
+	}
+
+	@Override
+	public Iterator<Stone> iterator() {
+		return stones.iterator();
 	}
 }
