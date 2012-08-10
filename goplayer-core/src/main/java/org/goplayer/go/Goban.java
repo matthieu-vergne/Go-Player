@@ -16,11 +16,13 @@ public class Goban {
 				field = new Stone[rowCount][colCount];
 			} else {
 				throw new IllegalArgumentException(
-						"The number of rows must be strictly positive: " + rowCount);
+						"The number of rows must be strictly positive: "
+								+ rowCount);
 			}
 		} else {
 			throw new IllegalArgumentException(
-					"The number of columns must be strictly positive: " + colCount);
+					"The number of columns must be strictly positive: "
+							+ colCount);
 		}
 	}
 
