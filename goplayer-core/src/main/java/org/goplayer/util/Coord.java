@@ -18,6 +18,11 @@ public class Coord {
 	}
 
 	@Override
+	public String toString() {
+		return "(" + row + ", " + col + ")";
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
