@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.goplayer.Coord;
 import org.goplayer.game.IPlayer;
 import org.goplayer.game.PlayerColor;
 import org.goplayer.game.StrategicalPlayer;
@@ -129,21 +130,5 @@ public class FirstFreeStrategyTest {
 		assertEquals(0, freePlaces.size());
 	}
 
-	private static class Coord {
-		private final int row;
-		private final int col;
-
-		public Coord(int row, int col) {
-			this.row = row;
-			this.col = col;
-		}
-
-		public int getRow() {
-			return row;
-		}
-
-		public int getCol() {
-			return col;
-		}
-	}
+	
 }

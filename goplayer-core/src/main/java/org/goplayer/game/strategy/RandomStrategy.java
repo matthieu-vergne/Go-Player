@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.goplayer.Coord;
 import org.goplayer.game.IPlayer;
 import org.goplayer.go.Goban;
 import org.goplayer.move.IMove;
@@ -11,7 +12,7 @@ import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
 
 public class RandomStrategy implements IStrategy {
-	
+
 	private final Random rand = new Random();
 
 	@Override
@@ -29,24 +30,7 @@ public class RandomStrategy implements IStrategy {
 		} else {
 			Coord coord = freePlaces.get(rand.nextInt(freePlaces.size()));
 			return new StoneMove(coord.getRow(), coord.getCol());
-		} 
-	}
-
-	private static class Coord {
-		private final int row;
-		private final int col;
-		
-		public Coord(int row, int col) {
-			this.row = row;
-			this.col = col;
-		}
-
-		public int getRow() {
-			return row;
-		}
-
-		public int getCol() {
-			return col;
 		}
 	}
+
 }
