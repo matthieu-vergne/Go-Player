@@ -13,7 +13,6 @@ import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
 import org.goplayer.go.StoneColor;
 
-// TODO implement contiguous block
 public class Block {
 	private final Set<Stone> stones;
 
