@@ -2,8 +2,10 @@ package org.goplayer.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.goplayer.exception.UnknownPlayerException;
 import org.goplayer.go.Goban;
@@ -27,11 +29,17 @@ public class Game {
 	private IPlayer winner = null;
 
 	public Game(Goban goban, IPlayer blackPlayer, IPlayer whitePlayer) {
-		this.goban = goban;
-		players.put(StoneColor.BLACK, blackPlayer);
-		players.put(StoneColor.WHITE, whitePlayer);
-		prisoners.put(StoneColor.BLACK, 0);
-		prisoners.put(StoneColor.WHITE, 0);
+		if (getRunningGameOn(goban) != null) {
+			throw new IllegalArgumentException(
+					"The given goban is already in a running game.");
+		} else {
+			this.goban = goban;
+			players.put(StoneColor.BLACK, blackPlayer);
+			players.put(StoneColor.WHITE, whitePlayer);
+			prisoners.put(StoneColor.BLACK, 0);
+			prisoners.put(StoneColor.WHITE, 0);
+			games.add(this);
+		}
 	}
 
 	public Goban getGoban() {
@@ -123,5 +131,58 @@ public class Game {
 
 	public IPlayer getWinner() {
 		return winner;
+	}
+
+	private static final Set<Game> games = new HashSet<Game>();
+
+	public static Set<Game> getAllGames() {
+		return new HashSet<Game>(games);
+	}
+
+	public static Set<Game> getAllRunningGames() {
+		HashSet<Game> games = new HashSet<Game>();
+		for (Game game : games) {
+			if (!game.isFinished()) {
+				games.add(game);
+			} else {
+				continue;
+			}
+		}
+		return games;
+	}
+
+	public static Set<Game> getAllFinishedGames() {
+		HashSet<Game> games = new HashSet<Game>();
+		for (Game game : games) {
+			if (game.isFinished()) {
+				games.add(game);
+			} else {
+				continue;
+			}
+		}
+		return games;
+	}
+
+	public static Set<Game> getAllGamesOn(Goban goban) {
+		HashSet<Game> games = new HashSet<Game>();
+		for (Game game : games) {
+			if (game.getGoban() == goban) {
+				games.add(game);
+			} else {
+				continue;
+			}
+		}
+		return games;
+	}
+
+	public static Game getRunningGameOn(Goban goban) {
+		for (Game game : games) {
+			if (game.getGoban() == goban && !game.isFinished()) {
+				return game;
+			} else {
+				continue;
+			}
+		}
+		return null;
 	}
 }
