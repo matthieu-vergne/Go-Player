@@ -29,6 +29,18 @@ public class Block implements Iterable<Stone> {
 		return stones;
 	}
 
+	public Integer size() {
+		return getStones().size();
+	}
+
+	public StoneColor getColor() {
+		return stones.iterator().next().getColor();
+	}
+
+	public boolean contains(Stone stone) {
+		return stones.contains(stone);
+	}
+
 	public static Block generateFrom(Goban goban, int startRow, int startCol) {
 		final List<Stone> stones = new ArrayList<Stone>();
 		final Stone reference = goban.getCoordContent(startRow, startCol);
