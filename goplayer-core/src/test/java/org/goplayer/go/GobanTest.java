@@ -2,8 +2,6 @@ package org.goplayer.go;
 
 import static org.junit.Assert.*;
 
-import java.util.Random;
-
 import org.goplayer.util.Coord;
 import org.junit.Test;
 
@@ -38,9 +36,7 @@ public class GobanTest {
 
 	@Test
 	public void testSquareGobanSize() {
-		Random r = new Random();
-		for (int size : new int[] { 9, 13, 19, r.nextInt(30), r.nextInt(30),
-				r.nextInt(30) }) {
+		for (int size : new int[] { 9, 13, 19 }) {
 			Goban goban = new Goban(size);
 			assertEquals(size, goban.getColCount());
 			assertEquals(size, goban.getRowCount());
