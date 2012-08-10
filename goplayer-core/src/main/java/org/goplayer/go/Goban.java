@@ -38,10 +38,18 @@ public class Goban {
 		return field[row][col];
 	}
 
+	public Stone getCoordContent(Coord coord) {
+		return getCoordContent(coord.getRow(), coord.getCol());
+	}
+
 	public void setCoordContent(int row, int col, Stone stone) {
 		field[row][col] = stone;
 	}
-	
+
+	public void setCoordContent(Coord coord, Stone stone) {
+		setCoordContent(coord.getRow(), coord.getCol(), stone);
+	}
+
 	public Coord getStoneCoord(Stone stone) {
 		for (int row = 0; row < field.length; row++) {
 			for (int col = 0; col < field[0].length; col++) {

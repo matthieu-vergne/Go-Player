@@ -41,6 +41,10 @@ public class Block implements Iterable<Stone> {
 		return stones.contains(stone);
 	}
 
+	public static Block generateFrom(Goban goban, Coord start) {
+		return generateFrom(goban, start.getRow(), start.getCol());
+	}
+
 	public static Block generateFrom(Goban goban, int startRow, int startCol) {
 		final List<Stone> stones = new ArrayList<Stone>();
 		final Stone reference = goban.getCoordContent(startRow, startCol);
