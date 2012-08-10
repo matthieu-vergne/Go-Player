@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.goplayer.Coord;
 import org.goplayer.go.Goban;
 import org.goplayer.move.IMove;
 import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
 import org.goplayer.player.IPlayer;
+import org.goplayer.util.Coord;
 
 public class RandomStrategy implements IStrategy {
 

@@ -8,10 +8,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.goplayer.Coord;
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
 import org.goplayer.go.StoneColor;
+import org.goplayer.util.Coord;
 
 public class Block {
 	private final Set<Stone> stones;

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.goplayer.Coord;
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
 import org.goplayer.go.StoneColor;
@@ -15,6 +14,7 @@ import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
 import org.goplayer.player.IPlayer;
 import org.goplayer.player.StrategicalPlayer;
+import org.goplayer.util.Coord;
 import org.junit.Test;
 
 public class FirstFreeStrategyTest {

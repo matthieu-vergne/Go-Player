@@ -1,4 +1,4 @@
-package org.goplayer;
+package org.goplayer.util;
 
 public class Coord {
 	private final int row;

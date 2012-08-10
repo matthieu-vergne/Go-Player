@@ -7,10 +7,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.goplayer.Coord;
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
 import org.goplayer.go.StoneColor;
+import org.goplayer.util.Coord;
 import org.junit.Test;
 
 public class BlockTest {
