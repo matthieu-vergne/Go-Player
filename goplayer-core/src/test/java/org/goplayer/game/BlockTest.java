@@ -43,10 +43,9 @@ public class BlockTest {
 	@Test
 	public void testGenerationFromFreePlace() {
 		int size = 5;
-		Goban goban = Goban.createFullGoban(size, size, StoneColor.BLACK);
+		Goban goban = new Goban(size);
 		int startRow = 2;
 		int startCol = 3;
-		goban.setCoordContent(startRow, startCol, null);// free the actual place
 		Block block = Block.generateFrom(goban, startRow, startCol);
 		assertEquals(0, block.getStones().size());
 	}
@@ -54,15 +53,10 @@ public class BlockTest {
 	@Test
 	public void testGenerationFromIsolatedPlace() {
 		int size = 5;
-		Goban goban = Goban.createFullGoban(size, size, StoneColor.BLACK);
+		Goban goban = new Goban(size);
 		int startRow = 2;
 		int startCol = 3;
-
-		// free the surroundings
-		goban.setCoordContent(startRow + 1, startCol, null);
-		goban.setCoordContent(startRow - 1, startCol, null);
-		goban.setCoordContent(startRow, startCol + 1, null);
-		goban.setCoordContent(startRow, startCol - 1, null);
+		goban.setCoordContent(startRow, startCol, new Stone(StoneColor.BLACK));
 
 		Block block = Block.generateFrom(goban, startRow, startCol);
 		assertEquals(1, block.getStones().size());
@@ -71,7 +65,7 @@ public class BlockTest {
 	}
 
 	@Test
-	public void testGenerationFromFullPlace() {
+	public void testGenerationFromFullGoban() {
 		int size = 5;
 		Goban goban = Goban.createFullGoban(size, size, StoneColor.BLACK);
 		int startRow = 2;
