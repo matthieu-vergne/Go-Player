@@ -1,6 +1,6 @@
 package org.goplayer.exception;
 
-import org.goplayer.game.IPlayer;
+import org.goplayer.player.IPlayer;
 
 @SuppressWarnings("serial")
 public class UnknownPlayerException extends RuntimeException {

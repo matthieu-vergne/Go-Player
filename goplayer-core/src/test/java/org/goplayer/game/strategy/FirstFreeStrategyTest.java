@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Random;
 
 import org.goplayer.Coord;
-import org.goplayer.game.IPlayer;
 import org.goplayer.game.PlayerColor;
-import org.goplayer.game.StrategicalPlayer;
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
 import org.goplayer.move.IMove;
 import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
+import org.goplayer.player.IPlayer;
+import org.goplayer.player.StrategicalPlayer;
 import org.junit.Test;
 
 public class FirstFreeStrategyTest {

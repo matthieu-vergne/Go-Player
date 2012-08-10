@@ -1,4 +1,4 @@
-package org.goplayer.game;
+package org.goplayer.player;
 
 import org.goplayer.game.strategy.IStrategy;
 import org.goplayer.go.Goban;

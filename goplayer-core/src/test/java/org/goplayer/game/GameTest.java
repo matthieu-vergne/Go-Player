@@ -7,6 +7,7 @@ import org.goplayer.go.Goban;
 import org.goplayer.move.AbandonMove;
 import org.goplayer.move.IMove;
 import org.goplayer.move.StoneMove;
+import org.goplayer.player.IPlayer;
 import org.junit.Test;
 
 public class GameTest {

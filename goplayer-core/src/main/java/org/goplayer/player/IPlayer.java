@@ -1,4 +1,4 @@
-package org.goplayer.game;
+package org.goplayer.player;
 
 import org.goplayer.go.Goban;
 import org.goplayer.move.IMove;

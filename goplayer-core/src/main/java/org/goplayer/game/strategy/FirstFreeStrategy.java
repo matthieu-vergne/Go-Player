@@ -1,10 +1,10 @@
 package org.goplayer.game.strategy;
 
-import org.goplayer.game.IPlayer;
 import org.goplayer.go.Goban;
 import org.goplayer.move.IMove;
 import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
+import org.goplayer.player.IPlayer;
 
 public class FirstFreeStrategy implements IStrategy {
 

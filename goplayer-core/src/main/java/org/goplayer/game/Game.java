@@ -12,6 +12,7 @@ import org.goplayer.move.AbandonMove;
 import org.goplayer.move.IMove;
 import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
+import org.goplayer.player.IPlayer;
 
 // TODO manage prisoners removing
 // TODO manage ko rule
