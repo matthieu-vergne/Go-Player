@@ -73,4 +73,25 @@ public class Goban {
 		}
 		return goban;
 	}
+
+	@Override
+	public String toString() {
+		String string = "";
+		for (int row = 0; row < field.length; row++) {
+			for (int col = 0; col < field[0].length; col++) {
+				Stone stone = field[row][col];
+				if (stone == null) {
+					string += "-";
+				} else if (stone.getColor() == StoneColor.BLACK) {
+					string += "X";
+				} else if (stone.getColor() == StoneColor.WHITE) {
+					string += "O";
+				} else {
+					throw new RuntimeException("This case should never happen.");
+				}
+			}
+			string += "\n";
+		}
+		return string.trim();
+	}
 }
