@@ -1,7 +1,6 @@
 package org.goplayer.game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,9 +15,12 @@ import org.goplayer.util.Coord;
 
 public class Block implements Iterable<Stone> {
 	private final Set<Stone> stones;
+	private final Set<Coord> liberties;
 
-	private Block(Collection<Stone> stones) {
+	private Block(Collection<Stone> stones, Collection<Coord> liberties) {
 		this.stones = Collections.unmodifiableSet(new HashSet<Stone>(stones));
+		this.liberties = Collections.unmodifiableSet(new HashSet<Coord>(
+				liberties));
 	}
 
 	public Collection<Stone> getStones() {
@@ -31,6 +33,10 @@ public class Block implements Iterable<Stone> {
 
 	public StoneColor getColor() {
 		return stones.iterator().next().getColor();
+	}
+
+	public Set<Coord> getLiberties() {
+		return liberties;
 	}
 
 	public boolean contains(Stone stone) {
@@ -48,6 +54,7 @@ public class Block implements Iterable<Stone> {
 					+ new Coord(startRow, startCol));
 		} else {
 			final List<Stone> stones = new ArrayList<Stone>();
+			final List<Coord> liberties = new ArrayList<Coord>();
 			final List<Coord> check = new ArrayList<Coord>();
 			final Set<Coord> explored = new HashSet<Coord>();
 			for (int row = 0; row < goban.getRowCount(); row++) {
@@ -66,7 +73,9 @@ public class Block implements Iterable<Stone> {
 				int row = coord.getRow();
 				int col = coord.getCol();
 				Stone stone = goban.getCoordContent(row, col);
-				if (stone != null && stone.getColor() == refColor) {
+				if (stone == null) {
+					liberties.add(coord);
+				} else if (stone.getColor() == refColor) {
 					stones.add(stone);
 					explored.add(coord);
 					check.add(new Coord(row + 1, col));
@@ -78,7 +87,7 @@ public class Block implements Iterable<Stone> {
 					continue;
 				}
 			}
-			return new Block(stones);
+			return new Block(stones, liberties);
 		}
 	}
 

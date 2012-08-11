@@ -2,10 +2,10 @@ package org.goplayer.game;
 
 import static org.junit.Assert.*;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
@@ -40,6 +40,15 @@ public class BlockTest {
 		assertEquals(1, block.getStones().size());
 		assertTrue(block.getStones().contains(
 				goban.getCoordContent(startRow, startCol)));
+		assertEquals(4, block.getLiberties().size());
+		assertTrue(block.getLiberties().contains(
+				new Coord(startRow + 1, startCol)));
+		assertTrue(block.getLiberties().contains(
+				new Coord(startRow - 1, startCol)));
+		assertTrue(block.getLiberties().contains(
+				new Coord(startRow, startCol + 1)));
+		assertTrue(block.getLiberties().contains(
+				new Coord(startRow, startCol - 1)));
 	}
 
 	@Test
@@ -57,6 +66,7 @@ public class BlockTest {
 						goban.getCoordContent(row, col)));
 			}
 		}
+		assertEquals(0, block.getLiberties().size());
 	}
 
 	@Test
@@ -108,11 +118,21 @@ public class BlockTest {
 		goban.setCoordContent(2, 0, new Stone(StoneColor.BLACK));
 		goban.setCoordContent(4, 1, new Stone(StoneColor.BLACK));
 
+		// compute expected liberties
+		Set<Coord> liberties = new HashSet<Coord>();
+		liberties.add(new Coord(1, 4));
+		liberties.add(new Coord(2, 1));
+		liberties.add(new Coord(3, 2));
+		liberties.add(new Coord(3, 3));
+		liberties.add(new Coord(4, 2));
+
 		// check equivalence whatever we take as a start
 		for (Coord start : target.keySet()) {
 			Block block = Block.generateFrom(goban, start);
 			assertTrue(block.getStones().containsAll(target.values()));
 			assertTrue(target.values().containsAll(block.getStones()));
+			assertTrue(block.getLiberties().containsAll(liberties));
+			assertTrue(liberties.containsAll(block.getLiberties()));
 		}
 	}
 }
