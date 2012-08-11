@@ -134,7 +134,7 @@ public class Game {
 				StoneMove stoneMove = (StoneMove) move;
 				Coord coord = stoneMove.getCoord();
 				if (getGoban().getCoordContent(coord) != null) {
-					throw new RuntimeException(player + " cannot play " + move
+					throw new RuntimeException(getPlayerColor(player) + " cannot play " + move
 							+ ", the place is not free");
 				} else {
 					Stone stone = new Stone(nextPlayerColor);
