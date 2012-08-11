@@ -12,6 +12,7 @@ import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
 import org.goplayer.go.StoneColor;
 import org.goplayer.util.Coord;
+import org.goplayer.util.StoneIterator;
 
 public class Block implements Iterable<Stone> {
 	private final Set<Stone> stones;
@@ -89,6 +90,38 @@ public class Block implements Iterable<Stone> {
 			}
 			return new Block(stones, liberties);
 		}
+	}
+
+	public static Set<Block> getAllBlocks(Goban goban) {
+		Set<Block> blocks = getAllBlocks(goban, StoneColor.BLACK);
+		blocks.addAll(getAllBlocks(goban, StoneColor.WHITE));
+		return blocks;
+	}
+
+	public static Set<Block> getAllBlocks(Goban goban, StoneColor color) {
+		final Set<Block> blocks = new HashSet<Block>();
+		StoneIterator iterator = new StoneIterator(goban, color);
+		while (iterator.hasNext()) {
+			Stone stone = (Stone) iterator.next();
+			if (isStoneInAllBlocks(stone, blocks)) {
+				continue;
+			} else {
+				Block block = generateFrom(goban, goban.getStoneCoord(stone));
+				blocks.add(block);
+			}
+		}
+		return blocks;
+	}
+
+	private static boolean isStoneInAllBlocks(Stone stone, Set<Block> blocks) {
+		for (Block block : blocks) {
+			if (block.contains(stone)) {
+				return true;
+			} else {
+				continue;
+			}
+		}
+		return false;
 	}
 
 	@Override
