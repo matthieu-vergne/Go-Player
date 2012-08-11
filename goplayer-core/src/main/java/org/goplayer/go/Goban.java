@@ -60,7 +60,8 @@ public class Goban {
 				}
 			}
 		}
-		throw new IllegalArgumentException("The given stone is not on this goban.");
+		throw new IllegalArgumentException(
+				"The given stone is not on this goban.");
 	}
 
 	public static Goban createFullGoban(int rowCount, int colCount,
