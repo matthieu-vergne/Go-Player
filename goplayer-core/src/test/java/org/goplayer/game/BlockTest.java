@@ -49,6 +49,7 @@ public class BlockTest {
 				new Coord(startRow, startCol + 1)));
 		assertTrue(block.getLiberties().contains(
 				new Coord(startRow, startCol - 1)));
+		assertEquals(StoneColor.BLACK, block.getColor());
 	}
 
 	@Test
@@ -67,6 +68,7 @@ public class BlockTest {
 			}
 		}
 		assertEquals(0, block.getLiberties().size());
+		assertEquals(StoneColor.BLACK, block.getColor());
 	}
 
 	@Test
@@ -133,6 +135,7 @@ public class BlockTest {
 			assertTrue(target.values().containsAll(block.getStones()));
 			assertTrue(block.getLiberties().containsAll(liberties));
 			assertTrue(liberties.containsAll(block.getLiberties()));
+			assertEquals(StoneColor.WHITE, block.getColor());
 		}
 	}
 }
