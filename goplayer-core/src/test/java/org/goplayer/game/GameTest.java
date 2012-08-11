@@ -2,8 +2,12 @@ package org.goplayer.game;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.goplayer.exception.UnknownPlayerException;
 import org.goplayer.game.strategy.FirstFreeStrategy;
+import org.goplayer.game.strategy.IStrategy;
 import org.goplayer.go.Goban;
 import org.goplayer.go.StoneColor;
 import org.goplayer.move.AbandonMove;
@@ -11,6 +15,7 @@ import org.goplayer.move.IMove;
 import org.goplayer.move.StoneMove;
 import org.goplayer.player.IPlayer;
 import org.goplayer.player.StrategicalPlayer;
+import org.goplayer.util.ScoreCouple;
 import org.junit.Test;
 
 public class GameTest {
@@ -100,6 +105,123 @@ public class GameTest {
 		for (int i = 0; i < 50; i++) {
 			game.play();
 		}
+	}
+
+	@Test
+	public void testCapture() {
+		final List<StoneMove> steps = new ArrayList<StoneMove>();
+		final List<ScoreCouple> lostStones = new ArrayList<ScoreCouple>();
+		// -----
+		// -----
+		// -----
+		// -----
+		// -----
+		lostStones.add(new ScoreCouple(0, 0));
+		steps.add(new StoneMove(0, 0));
+		// X----
+		// -----
+		// -----
+		// -----
+		// -----
+		lostStones.add(new ScoreCouple(0, 0));
+		steps.add(new StoneMove(0, 1));
+		// X0---
+		// -----
+		// -----
+		// -----
+		// -----
+		lostStones.add(new ScoreCouple(0, 0));
+		steps.add(new StoneMove(1, 1));
+		// X0---
+		// -X---
+		// -----
+		// -----
+		// -----
+		lostStones.add(new ScoreCouple(0, 0));
+		steps.add(new StoneMove(1, 0));
+		// -0---
+		// 0X---
+		// -----
+		// -----
+		// -----
+		lostStones.add(new ScoreCouple(1, 0));
+		steps.add(new StoneMove(0, 2));
+		// -0X--
+		// 0X---
+		// -----
+		// -----
+		// -----
+		lostStones.add(new ScoreCouple(1, 0));
+		steps.add(new StoneMove(1, 2));
+		// -0X--
+		// 0XO--
+		// -----
+		// -----
+		// -----
+		lostStones.add(new ScoreCouple(1, 0));
+		steps.add(new StoneMove(0, 0));
+		// X-X--
+		// 0XO--
+		// -----
+		// -----
+		// -----
+		lostStones.add(new ScoreCouple(1, 1));
+		steps.add(new StoneMove(2, 1));
+		// X-X--
+		// 0XO--
+		// -O---
+		// -----
+		// -----
+		lostStones.add(new ScoreCouple(1, 1));
+		steps.add(new StoneMove(0, 1));
+		// XXX--
+		// 0XO--
+		// -O---
+		// -----
+		// -----
+		lostStones.add(new ScoreCouple(1, 1));
+		steps.add(new StoneMove(0, 3));
+		// ---O-
+		// 0-O--
+		// -O---
+		// -----
+		// -----
+		lostStones.add(new ScoreCouple(5, 1));
+
+		int size = 5;
+		Goban goban = new Goban(size);
+		IStrategy strategy = new IStrategy() {
+			private int stepCoutner = -1;
+
+			@Override
+			public IMove chooseMove(Goban goban, IPlayer player) {
+				stepCoutner++;
+				if (!steps.isEmpty()) {
+					Game game = Game.getRunningGameOn(goban);
+					ScoreCouple actual = new ScoreCouple(
+							game.getLostStonesCount(StoneColor.BLACK),
+							game.getLostStonesCount(StoneColor.WHITE));
+					ScoreCouple expected = lostStones.remove(0);
+					assertEquals("Step " + stepCoutner + ": " + actual
+							+ " instead of " + expected, expected, actual);
+					return steps.remove(0);
+				} else {
+					return new AbandonMove();
+				}
+			}
+		};
+		IPlayer blackPlayer = new StrategicalPlayer(strategy);
+		IPlayer whitePlayer = new StrategicalPlayer(strategy);
+		Game game = new Game(goban, blackPlayer, whitePlayer);
+		while (!game.isFinished()) {
+			game.play();
+		}
+		assertEquals(1, lostStones.size());
+		ScoreCouple scores = lostStones.remove(0);
+		assertEquals(scores.getBlack(),
+				game.getLostStonesCount(StoneColor.BLACK));
+		assertEquals(scores.getWhite(),
+				game.getLostStonesCount(StoneColor.WHITE));
 	}
 
 	static class TestPlayer extends StrategicalPlayer {

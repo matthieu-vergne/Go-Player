@@ -19,7 +19,6 @@ import org.goplayer.player.IPlayer;
 import org.goplayer.util.Coord;
 import org.goplayer.util.MoveHistory;
 
-// TODO manage prisoners removing
 // TODO manage ko rule
 public class Game {
 
@@ -55,6 +54,42 @@ public class Game {
 
 	public int getLostStonesCount(StoneColor color) {
 		return lostStones.get(color);
+	}
+
+	private void captureStones() {
+		Set<Block> blocks = Block.getAllBlocks(goban);
+		Stone lastStone = history.getLast().getStone();
+		for (Block block : blocks) {
+			if (block.contains(lastStone)) {
+				/*
+				 * Do not treat the block containing the last stone before the
+				 * end. This stone has the priority over the capturing, so other
+				 * blocks may be captured before.
+				 */
+				continue;
+			} else {
+				captureBlockIfSurrounded(block);
+			}
+		}
+
+		/*
+		 * Re-check the block of the last stone. If well played, it should be
+		 * not captured.
+		 */
+		Block block = Block.generateFrom(goban, history.getLast().getCoord());
+		captureBlockIfSurrounded(block);
+	}
+
+	private void captureBlockIfSurrounded(Block block) {
+		if (block.getLiberties().isEmpty()) {
+			StoneColor color = block.getColor();
+			lostStones.put(color, lostStones.get(color) + block.size());
+			for (Stone stone : block) {
+				goban.setCoordContent(goban.getStoneCoord(stone), null);
+			}
+		} else {
+			// do nothing
+		}
 	}
 
 	public StoneColor getPlayerColor(final IPlayer player) {
@@ -105,6 +140,7 @@ public class Game {
 					Stone stone = new Stone(nextPlayerColor);
 					getGoban().setCoordContent(coord, stone);
 					history.add(coord, stone);
+					captureStones();
 				}
 				previousHasPassed = false;
 			} else if (move instanceof PassMove) {
