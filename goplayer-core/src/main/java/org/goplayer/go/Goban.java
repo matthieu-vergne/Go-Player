@@ -95,4 +95,20 @@ public class Goban {
 		}
 		return string.trim();
 	}
+
+	@Override
+	protected Goban clone() {
+		Goban clone = new Goban(getRowCount(), getColCount());
+		for (int row = 0; row < getRowCount(); row++) {
+			for (int col = 0; col < getColCount(); col++) {
+				Stone stone = getCoordContent(row, col);
+				if (stone != null) {
+					clone.setCoordContent(row, col, new Stone(stone.getColor()));
+				} else {
+					continue;
+				}
+			}
+		}
+		return clone;
+	}
 }

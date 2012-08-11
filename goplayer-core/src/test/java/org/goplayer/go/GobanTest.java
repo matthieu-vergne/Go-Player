@@ -132,4 +132,67 @@ public class GobanTest {
 		goban.setCoordContent(1, 1, new Stone(StoneColor.WHITE));
 		assertEquals("XO\n-O", goban.toString());
 	}
+
+	@Test
+	public void testClone() {
+		Goban goban = new Goban(5, 6);
+		goban.setCoordContent(0, 1, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(0, 2, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(0, 3, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(0, 5, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(1, 0, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(1, 1, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(1, 2, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(1, 4, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(2, 0, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(2, 1, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(2, 3, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(2, 5, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(3, 0, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(4, 1, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(4, 2, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(4, 4, new Stone(StoneColor.WHITE));
+
+		// check max coverage
+		boolean hasBlack = false;
+		boolean hasWhite = false;
+		boolean hasFree = false;
+		for (int row = 0; row < goban.getRowCount(); row++) {
+			for (int col = 0; col < goban.getColCount(); col++) {
+				Stone stone = goban.getCoordContent(row, col);
+				if (stone == null) {
+					hasFree = true;
+				} else if (stone.getColor() == StoneColor.BLACK) {
+					hasBlack = true;
+				} else if (stone.getColor() == StoneColor.WHITE) {
+					hasWhite = true;
+				} else {
+					throw new IllegalStateException(
+							"This case should not happen.");
+				}
+			}
+		}
+		assertTrue(hasBlack);
+		assertTrue(hasWhite);
+		assertTrue(hasFree);
+
+		// test
+		Goban clone = goban.clone();
+		assertFalse(goban == clone);
+		assertEquals(goban.getRowCount(), clone.getRowCount());
+		assertEquals(goban.getColCount(), clone.getColCount());
+		for (int row = 0; row < goban.getRowCount(); row++) {
+			for (int col = 0; col < goban.getColCount(); col++) {
+				Stone expected = goban.getCoordContent(row, col);
+				Stone actual = clone.getCoordContent(row, col);
+				if (expected == null) {
+					assertNull(actual);
+				} else {
+					assertFalse(expected == actual);
+					assertNotNull(actual);
+					assertEquals(expected.getColor(), actual.getColor());
+				}
+			}
+		}
+	}
 }
