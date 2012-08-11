@@ -17,6 +17,7 @@ import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
 import org.goplayer.player.IPlayer;
 import org.goplayer.util.Coord;
+import org.goplayer.util.MoveHistory;
 
 // TODO manage prisoners removing
 // TODO manage ko rule
@@ -28,6 +29,7 @@ public class Game {
 	private StoneColor nextPlayerColor = StoneColor.BLACK;
 	private boolean previousHasPassed = false;
 	private IPlayer winner = null;
+	private final MoveHistory history = new MoveHistory();
 
 	public Game(Goban goban, IPlayer blackPlayer, IPlayer whitePlayer) {
 		if (getRunningGameOn(goban) != null) {
@@ -102,6 +104,7 @@ public class Game {
 				} else {
 					Stone stone = new Stone(nextPlayerColor);
 					getGoban().setCoordContent(coord, stone);
+					history.add(coord, stone);
 				}
 				previousHasPassed = false;
 			} else if (move instanceof PassMove) {
@@ -131,6 +134,10 @@ public class Game {
 
 	public IPlayer getWinner() {
 		return winner;
+	}
+
+	public MoveHistory getHistory() {
+		return history.clone();
 	}
 
 	private static final Set<Game> games = new HashSet<Game>();
