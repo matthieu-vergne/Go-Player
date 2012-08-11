@@ -16,6 +16,7 @@ import org.goplayer.move.IMove;
 import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
 import org.goplayer.player.IPlayer;
+import org.goplayer.util.Coord;
 
 // TODO manage prisoners removing
 // TODO manage ko rule
@@ -94,14 +95,13 @@ public class Game {
 			IMove move = player.play(getGoban());
 			if (move instanceof StoneMove) {
 				StoneMove stoneMove = (StoneMove) move;
-				int row = stoneMove.getRow();
-				int col = stoneMove.getCol();
-				if (getGoban().getCoordContent(row, col) != null) {
+				Coord coord = stoneMove.getCoord();
+				if (getGoban().getCoordContent(coord) != null) {
 					throw new RuntimeException(player + " cannot play " + move
 							+ ", the place is not free");
 				} else {
-					getGoban().setCoordContent(row, col,
-							new Stone(nextPlayerColor));
+					Stone stone = new Stone(nextPlayerColor);
+					getGoban().setCoordContent(coord, stone);
 				}
 				previousHasPassed = false;
 			} else if (move instanceof PassMove) {
