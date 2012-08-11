@@ -46,8 +46,11 @@ public class BlockTest {
 		Goban goban = new Goban(size);
 		int startRow = 2;
 		int startCol = 3;
-		Block block = Block.generateFrom(goban, startRow, startCol);
-		assertEquals(0, block.getStones().size());
+		try {
+			Block.generateFrom(goban, startRow, startCol);
+			fail("No exception thrown");
+		} catch (IllegalArgumentException e) {
+		}
 	}
 
 	@Test

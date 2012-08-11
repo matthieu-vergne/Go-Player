@@ -46,11 +46,12 @@ public class Block implements Iterable<Stone> {
 	}
 
 	public static Block generateFrom(Goban goban, int startRow, int startCol) {
-		final List<Stone> stones = new ArrayList<Stone>();
 		final Stone reference = goban.getCoordContent(startRow, startCol);
 		if (reference == null) {
-			// do not fill anything
+			throw new IllegalArgumentException("No stone is at "
+					+ new Coord(startRow, startCol));
 		} else {
+			final List<Stone> stones = new ArrayList<Stone>();
 			final List<Coord> check = new ArrayList<Coord>();
 			final Set<Coord> explored = new HashSet<Coord>();
 			for (int row = 0; row < goban.getRowCount(); row++) {
@@ -61,7 +62,7 @@ public class Block implements Iterable<Stone> {
 				explored.add(new Coord(-1, col));
 				explored.add(new Coord(goban.getRowCount(), col));
 			}
-			
+
 			check.add(new Coord(startRow, startCol));
 			StoneColor refColor = reference.getColor();
 			while (!check.isEmpty()) {
@@ -81,8 +82,8 @@ public class Block implements Iterable<Stone> {
 					continue;
 				}
 			}
+			return new Block(stones);
 		}
-		return new Block(stones);
 	}
 
 	@Override
