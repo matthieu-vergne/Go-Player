@@ -117,14 +117,16 @@ public class GobanTest {
 			}
 		}
 	}
-	
+
 	@Test
 	public void testString() {
 		assertEquals("-", new Goban(1).toString());
 		assertEquals("--\n--", new Goban(2).toString());
-		assertEquals("XX\nXX", Goban.createFullGoban(2, 2, StoneColor.BLACK).toString());
-		assertEquals("OO\nOO", Goban.createFullGoban(2, 2, StoneColor.WHITE).toString());
-		
+		assertEquals("XX\nXX", Goban.createFullGoban(2, 2, StoneColor.BLACK)
+				.toString());
+		assertEquals("OO\nOO", Goban.createFullGoban(2, 2, StoneColor.WHITE)
+				.toString());
+
 		Goban goban = new Goban(2);
 		goban.setCoordContent(0, 0, new Stone(StoneColor.BLACK));
 		goban.setCoordContent(0, 1, new Stone(StoneColor.WHITE));
