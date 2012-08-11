@@ -1,24 +1,28 @@
 package org.goplayer.move;
 
+import org.goplayer.util.Coord;
+
 public class StoneMove implements IMove {
-	private final int row;
-	private final int col;
+	private final Coord coord;
 
 	public StoneMove(int row, int col) {
-		this.row = row;
-		this.col = col;
+		this.coord = new Coord(row, col);
 	}
 
 	public int getRow() {
-		return row;
+		return coord.getRow();
 	}
 
 	public int getCol() {
-		return col;
+		return coord.getCol();
+	}
+	
+	public Coord getCoord() {
+		return coord;
 	}
 
 	@Override
 	public String toString() {
-		return "(" + row + ", " + col + ")";
+		return coord.toString();
 	}
 }
