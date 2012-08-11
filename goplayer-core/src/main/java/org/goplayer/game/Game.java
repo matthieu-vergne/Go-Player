@@ -23,7 +23,7 @@ public class Game {
 
 	private final Goban goban;
 	private final Map<StoneColor, IPlayer> players = new HashMap<StoneColor, IPlayer>();
-	private final Map<StoneColor, Integer> prisoners = new HashMap<StoneColor, Integer>();
+	private final Map<StoneColor, Integer> lostStones = new HashMap<StoneColor, Integer>();
 	private StoneColor nextPlayerColor = StoneColor.BLACK;
 	private boolean previousHasPassed = false;
 	private IPlayer winner = null;
@@ -36,8 +36,8 @@ public class Game {
 			this.goban = goban;
 			players.put(StoneColor.BLACK, blackPlayer);
 			players.put(StoneColor.WHITE, whitePlayer);
-			prisoners.put(StoneColor.BLACK, 0);
-			prisoners.put(StoneColor.WHITE, 0);
+			lostStones.put(StoneColor.BLACK, 0);
+			lostStones.put(StoneColor.WHITE, 0);
 			games.add(this);
 		}
 	}
@@ -50,8 +50,8 @@ public class Game {
 		return players.get(color);
 	}
 
-	public int getPrisoners(StoneColor color) {
-		return prisoners.get(color);
+	public int getLostStonesCount(StoneColor color) {
+		return lostStones.get(color);
 	}
 
 	public StoneColor getPlayerColor(final IPlayer player) {
