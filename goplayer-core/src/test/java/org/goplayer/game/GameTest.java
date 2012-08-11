@@ -3,12 +3,14 @@ package org.goplayer.game;
 import static org.junit.Assert.*;
 
 import org.goplayer.exception.UnknownPlayerException;
+import org.goplayer.game.strategy.FirstFreeStrategy;
 import org.goplayer.go.Goban;
 import org.goplayer.go.StoneColor;
 import org.goplayer.move.AbandonMove;
 import org.goplayer.move.IMove;
 import org.goplayer.move.StoneMove;
 import org.goplayer.player.IPlayer;
+import org.goplayer.player.StrategicalPlayer;
 import org.junit.Test;
 
 public class GameTest {
@@ -100,19 +102,11 @@ public class GameTest {
 		}
 	}
 
-	static class TestPlayer implements IPlayer {
-		@Override
-		public IMove play(Goban goban) {
-			for (int row = 0; row < goban.getRowCount(); row++) {
-				for (int col = 0; col < goban.getColCount(); col++) {
-					if (goban.getCoordContent(row, col) == null) {
-						return new StoneMove(row, col);
-					} else {
-						continue;
-					}
-				}
-			}
-			return new AbandonMove();
+	static class TestPlayer extends StrategicalPlayer {
+
+		public TestPlayer() {
+			super(new FirstFreeStrategy());
 		}
+
 	}
 }
