@@ -84,9 +84,14 @@ public class BlockTest {
 	@Test
 	public void testGenerationFromCustomBlock() {
 		int size = 5;
-		Goban goban = Goban.createFullGoban(size, size, StoneColor.BLACK);
+		Goban goban = new Goban(size);
 
 		// create custom white block
+		// -----
+		// ---0-
+		// --000
+		// ----0
+		// ---00
 		Map<Coord, Stone> target = new HashMap<Coord, Stone>();
 		target.put(new Coord(1, 3), new Stone(StoneColor.WHITE));
 		target.put(new Coord(2, 2), new Stone(StoneColor.WHITE));
@@ -105,14 +110,29 @@ public class BlockTest {
 		}
 
 		// add whites which touch only
+		// 0----
+		// -0-0-
+		// --000
+		// -0--0
+		// ---00
 		goban.setCoordContent(0, 0, new Stone(StoneColor.WHITE));
 		goban.setCoordContent(1, 1, new Stone(StoneColor.WHITE));
 		goban.setCoordContent(3, 1, new Stone(StoneColor.WHITE));
 
+		// add some blacks
+		// 0--X-
+		// -0X0-
+		// X-000
+		// -0--0
+		// -X-00
+		goban.setCoordContent(0, 3, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(1, 2, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(2, 0, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(4, 1, new Stone(StoneColor.BLACK));
+
 		// check equivalence whatever we take as a start
 		for (Coord start : target.keySet()) {
-			Block block = Block.generateFrom(goban, start.getRow(),
-					start.getCol());
+			Block block = Block.generateFrom(goban, start);
 			assertTrue(block.getStones().containsAll(target.values()));
 			assertTrue(target.values().containsAll(block.getStones()));
 		}
