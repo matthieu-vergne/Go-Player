@@ -17,12 +17,8 @@ import org.goplayer.util.Coord;
 public class Block implements Iterable<Stone> {
 	private final Set<Stone> stones;
 
-	public Block(Collection<Stone> stones) {
+	private Block(Collection<Stone> stones) {
 		this.stones = Collections.unmodifiableSet(new HashSet<Stone>(stones));
-	}
-
-	public Block(Stone... stones) {
-		this(Arrays.asList(stones));
 	}
 
 	public Collection<Stone> getStones() {

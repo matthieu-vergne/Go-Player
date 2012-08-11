@@ -16,31 +16,6 @@ import org.junit.Test;
 public class BlockTest {
 
 	@Test
-	public void testCollectionInitialization() {
-		Stone s1 = new Stone(StoneColor.BLACK);
-		Stone s2 = new Stone(StoneColor.BLACK);
-		Stone s3 = new Stone(StoneColor.BLACK);
-		Collection<Stone> stones = Arrays.asList(s1, s2, s3);
-		Block block = new Block(stones);
-		assertEquals(3, block.getStones().size());
-		assertTrue(block.getStones().contains(s1));
-		assertTrue(block.getStones().contains(s2));
-		assertTrue(block.getStones().contains(s3));
-	}
-
-	@Test
-	public void testArgumentsInitialization() {
-		Stone s1 = new Stone(StoneColor.BLACK);
-		Stone s2 = new Stone(StoneColor.BLACK);
-		Stone s3 = new Stone(StoneColor.BLACK);
-		Block block = new Block(s1, s2, s3);
-		assertEquals(3, block.getStones().size());
-		assertTrue(block.getStones().contains(s1));
-		assertTrue(block.getStones().contains(s2));
-		assertTrue(block.getStones().contains(s3));
-	}
-
-	@Test
 	public void testGenerationFromFreePlace() {
 		int size = 5;
 		Goban goban = new Goban(size);
