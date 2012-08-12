@@ -151,9 +151,10 @@ public class Game {
 						&& isSuicide(nextPlayerColor, coord)) {
 					throw new SuicideException(color, coord);
 				} else {
+					Goban gobanState = goban.clone();
 					Stone stone = new Stone(nextPlayerColor);
 					getGoban().setCoordContent(coord, stone);
-					history.add(coord, stone);
+					history.add(coord, stone, gobanState);
 					captureStones();
 				}
 				previousHasPassed = false;
