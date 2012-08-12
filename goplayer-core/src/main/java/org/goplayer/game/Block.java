@@ -44,6 +44,11 @@ public class Block implements Iterable<Stone> {
 		return hash;
 	}
 
+	@Override
+	public Block clone() {
+		return new Block(stones, liberties);
+	}
+
 	private Block(Collection<Stone> stones, Collection<Coord> liberties) {
 		this.stones = Collections.unmodifiableSet(new HashSet<Stone>(stones));
 		this.liberties = Collections.unmodifiableSet(new HashSet<Coord>(
