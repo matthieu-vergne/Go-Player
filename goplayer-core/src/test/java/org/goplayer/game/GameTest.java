@@ -242,7 +242,7 @@ public class GameTest {
 		// -----
 		// -----
 		// -----
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(2, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(2, 2)));
 
 		goban.setCoordContent(1, 2, new Stone(StoneColor.BLACK));
 		// -----
@@ -250,7 +250,7 @@ public class GameTest {
 		// -----
 		// -----
 		// -----
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(2, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(2, 2)));
 
 		goban.setCoordContent(2, 1, new Stone(StoneColor.BLACK));
 		// -----
@@ -258,7 +258,7 @@ public class GameTest {
 		// -X---
 		// -----
 		// -----
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(2, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(2, 2)));
 
 		goban.setCoordContent(2, 3, new Stone(StoneColor.BLACK));
 		// -----
@@ -266,7 +266,7 @@ public class GameTest {
 		// -X-X-
 		// -----
 		// -----
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(2, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(2, 2)));
 
 		goban.setCoordContent(3, 2, new Stone(StoneColor.BLACK));
 		// -----
@@ -274,7 +274,7 @@ public class GameTest {
 		// -X-X-
 		// --X--
 		// -----
-		assertTrue(game.isSuicide(StoneColor.WHITE, new Coord(2, 2)));
+		assertTrue(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(2, 2)));
 	}
 
 	@Test
@@ -289,7 +289,7 @@ public class GameTest {
 		// -----
 		// -----
 		// -----
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(1, 2, new Stone(StoneColor.BLACK));
 		// -----
@@ -297,7 +297,7 @@ public class GameTest {
 		// -----
 		// -----
 		// -----
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(2, 1, new Stone(StoneColor.BLACK));
 		// -----
@@ -305,7 +305,7 @@ public class GameTest {
 		// -X---
 		// -----
 		// -----
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(2, 3, new Stone(StoneColor.BLACK));
 		// -----
@@ -313,7 +313,7 @@ public class GameTest {
 		// -X-X-
 		// -----
 		// -----
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(3, 0, new Stone(StoneColor.BLACK));
 		// -----
@@ -321,7 +321,7 @@ public class GameTest {
 		// -X-X-
 		// X----
 		// -----
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(3, 4, new Stone(StoneColor.BLACK));
 		// -----
@@ -329,7 +329,7 @@ public class GameTest {
 		// -X-X-
 		// X---X
 		// -----
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(4, 1, new Stone(StoneColor.BLACK));
 		// -----
@@ -337,7 +337,7 @@ public class GameTest {
 		// -X-X-
 		// X---X
 		// -X---
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(4, 2, new Stone(StoneColor.BLACK));
 		// -----
@@ -345,7 +345,7 @@ public class GameTest {
 		// -X-X-
 		// X---X
 		// -XX--
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(4, 3, new Stone(StoneColor.BLACK));
 		// -----
@@ -353,7 +353,7 @@ public class GameTest {
 		// -X-X-
 		// X---X
 		// -XXX-
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(2, 2, new Stone(StoneColor.WHITE));
 		// -----
@@ -361,7 +361,7 @@ public class GameTest {
 		// -XOX-
 		// X---X
 		// -XXX-
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(3, 1, new Stone(StoneColor.WHITE));
 		// -----
@@ -369,7 +369,7 @@ public class GameTest {
 		// -XOX-
 		// XO--X
 		// -XXX-
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(3, 3, new Stone(StoneColor.WHITE));
 		// -----
@@ -377,7 +377,7 @@ public class GameTest {
 		// -XOX-
 		// XO-OX
 		// -XXX-
-		assertTrue(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertTrue(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 
 		goban.setCoordContent(3, 4, null);
 		// -----
@@ -385,7 +385,7 @@ public class GameTest {
 		// -XOX-
 		// XO-O-
 		// -XXX-
-		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+		assertFalse(game.isForbiddenSuicide(StoneColor.WHITE, new Coord(3, 2)));
 	}
 
 	@Test
@@ -484,7 +484,7 @@ public class GameTest {
 					// -----
 					// -----
 					// -----
-					assertFalse(game.isKo(StoneColor.BLACK, new Coord(1, 1)));
+					assertFalse(game.isForbiddenKo(StoneColor.BLACK, new Coord(1, 1)));
 					return new StoneMove(1, 1);
 				} else if (step == 1) {
 					// -----
@@ -492,7 +492,7 @@ public class GameTest {
 					// -----
 					// -----
 					// -----
-					assertFalse(game.isKo(StoneColor.WHITE, new Coord(1, 2)));
+					assertFalse(game.isForbiddenKo(StoneColor.WHITE, new Coord(1, 2)));
 					return new StoneMove(1, 2);
 				} else if (step == 2) {
 					// -----
@@ -500,7 +500,7 @@ public class GameTest {
 					// -----
 					// -----
 					// -----
-					assertFalse(game.isKo(StoneColor.BLACK, new Coord(2, 0)));
+					assertFalse(game.isForbiddenKo(StoneColor.BLACK, new Coord(2, 0)));
 					return new StoneMove(2, 0);
 				} else if (step == 3) {
 					// -----
@@ -508,7 +508,7 @@ public class GameTest {
 					// X----
 					// -----
 					// -----
-					assertFalse(game.isKo(StoneColor.WHITE, new Coord(2, 1)));
+					assertFalse(game.isForbiddenKo(StoneColor.WHITE, new Coord(2, 1)));
 					return new StoneMove(2, 1);
 				} else if (step == 4) {
 					// -----
@@ -516,7 +516,7 @@ public class GameTest {
 					// XO---
 					// -----
 					// -----
-					assertFalse(game.isKo(StoneColor.BLACK, new Coord(3, 1)));
+					assertFalse(game.isForbiddenKo(StoneColor.BLACK, new Coord(3, 1)));
 					return new StoneMove(3, 1);
 				} else if (step == 5) {
 					// -----
@@ -524,7 +524,7 @@ public class GameTest {
 					// XO---
 					// -X---
 					// -----
-					assertFalse(game.isKo(StoneColor.WHITE, new Coord(3, 2)));
+					assertFalse(game.isForbiddenKo(StoneColor.WHITE, new Coord(3, 2)));
 					return new StoneMove(3, 2);
 				} else if (step == 6) {
 					// -----
@@ -532,7 +532,7 @@ public class GameTest {
 					// XO---
 					// -XO--
 					// -----
-					assertFalse(game.isKo(StoneColor.BLACK, new Coord(2, 2)));
+					assertFalse(game.isForbiddenKo(StoneColor.BLACK, new Coord(2, 2)));
 					return new StoneMove(2, 2);
 				} else if (step == 7) {
 					// -----
@@ -540,7 +540,7 @@ public class GameTest {
 					// X-X--
 					// -XO--
 					// -----
-					assertFalse(game.isKo(StoneColor.WHITE, new Coord(2, 3)));
+					assertFalse(game.isForbiddenKo(StoneColor.WHITE, new Coord(2, 3)));
 					return new StoneMove(2, 3);
 				} else if (step == 8) {
 					// -----
@@ -548,7 +548,7 @@ public class GameTest {
 					// X-XO-
 					// -XO--
 					// -----
-					assertFalse(game.isKo(StoneColor.BLACK, new Coord(1, 0)));
+					assertFalse(game.isForbiddenKo(StoneColor.BLACK, new Coord(1, 0)));
 					return new StoneMove(1, 0);
 				} else if (step == 9) {
 					// -----
@@ -556,7 +556,7 @@ public class GameTest {
 					// X-XO-
 					// -XO--
 					// -----
-					assertFalse(game.isKo(StoneColor.WHITE, new Coord(2, 1)));
+					assertFalse(game.isForbiddenKo(StoneColor.WHITE, new Coord(2, 1)));
 					return new StoneMove(2, 1);
 				} else if (step == 10) {
 					// -----
@@ -564,8 +564,8 @@ public class GameTest {
 					// XO-O-
 					// -XO--
 					// -----
-					assertTrue(game.isKo(StoneColor.BLACK, new Coord(2, 2)));
-					assertFalse(game.isKo(StoneColor.BLACK, new Coord(3, 0)));
+					assertTrue(game.isForbiddenKo(StoneColor.BLACK, new Coord(2, 2)));
+					assertFalse(game.isForbiddenKo(StoneColor.BLACK, new Coord(3, 0)));
 					return new StoneMove(3, 0);
 				} else if (step == 11) {
 					// -----
@@ -573,7 +573,7 @@ public class GameTest {
 					// XO-O-
 					// XXO--
 					// -----
-					assertFalse(game.isKo(StoneColor.WHITE, new Coord(1, 3)));
+					assertFalse(game.isForbiddenKo(StoneColor.WHITE, new Coord(1, 3)));
 					return new StoneMove(1, 3);
 				} else if (step == 12) {
 					// -----
@@ -581,7 +581,7 @@ public class GameTest {
 					// XO-O-
 					// XXO--
 					// -----
-					assertFalse(game.isKo(StoneColor.BLACK, new Coord(2, 2)));
+					assertFalse(game.isForbiddenKo(StoneColor.BLACK, new Coord(2, 2)));
 					return new StoneMove(2, 2);
 				} else if (step == 13) {
 					// -----
@@ -589,8 +589,8 @@ public class GameTest {
 					// X-XO-
 					// XXO--
 					// -----
-					assertTrue(game.isKo(StoneColor.WHITE, new Coord(2, 1)));
-					assertFalse(game.isKo(StoneColor.WHITE, new Coord(3, 3)));
+					assertTrue(game.isForbiddenKo(StoneColor.WHITE, new Coord(2, 1)));
+					assertFalse(game.isForbiddenKo(StoneColor.WHITE, new Coord(3, 3)));
 					return new StoneMove(3, 3);
 				} else if (step == 14) {
 					// -----
@@ -598,7 +598,7 @@ public class GameTest {
 					// X-XO-
 					// XXOO-
 					// -----
-					assertFalse(game.isKo(StoneColor.BLACK, new Coord(2, 1)));
+					assertFalse(game.isForbiddenKo(StoneColor.BLACK, new Coord(2, 1)));
 					return new StoneMove(2, 1);
 				} else {
 					// -----

@@ -147,9 +147,9 @@ public class Game {
 				if (getGoban().getCoordContent(coord) != null) {
 					throw new NotFreeCoordException(color, coord);
 				} else if (!isSuicideAllowed()
-						&& isSuicide(nextPlayerColor, coord)) {
+						&& isForbiddenSuicide(nextPlayerColor, coord)) {
 					throw new SuicideException(color, coord);
-				} else if (!isKoAllowed() && isKo(nextPlayerColor, coord)) {
+				} else if (!isKoAllowed() && isForbiddenKo(nextPlayerColor, coord)) {
 					throw new KoException(color, coord);
 				} else {
 					Goban gobanState = goban.clone();
@@ -256,7 +256,7 @@ public class Game {
 		this.isSuicideAllowed = allowed;
 	}
 
-	public boolean isSuicide(StoneColor color, Coord coord) {
+	public boolean isForbiddenSuicide(StoneColor color, Coord coord) {
 		Map<StoneColor, IPlayer> fakePlayers = new HashMap<StoneColor, IPlayer>(
 				players);
 		fakePlayers.put(color, new DeterminedPlayer(coord));
@@ -278,7 +278,7 @@ public class Game {
 		this.isKoAllowed = allowed;
 	}
 
-	public boolean isKo(StoneColor color, Coord coord) {
+	public boolean isForbiddenKo(StoneColor color, Coord coord) {
 		Map<StoneColor, IPlayer> fakePlayers = new HashMap<StoneColor, IPlayer>(
 				players);
 		fakePlayers.put(color, new DeterminedPlayer(coord));
