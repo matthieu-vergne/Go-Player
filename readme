@@ -8,7 +8,7 @@ These points are close to be done, and a lot of tests are already implemented to
 
 How to start?
 
-I suppose you have a JAR of this project than you can use as a library (if not, get this project and generate it yourself, Google is your friend {^_°}). Then, you can use these classes:
+I suppose you already have this project (if not, just get it, you have a ZIP button at the top of the project page). Then, you can use these classes:
 - org.goplayer.go.Goban (to create a Goban)
 - org.goplayer.game.strategy.IStrategy (to create a player strategy)
 - org.goplayer.player.StrategicalPlayer (to create a new player who will use a strategy)
