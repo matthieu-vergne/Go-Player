@@ -13,6 +13,7 @@ import org.goplayer.go.StoneColor;
 import org.goplayer.move.AbandonMove;
 import org.goplayer.move.IMove;
 import org.goplayer.move.StoneMove;
+import org.goplayer.player.DeterminedPlayer;
 import org.goplayer.player.IPlayer;
 import org.goplayer.player.StrategicalPlayer;
 import org.goplayer.util.ScoreCouple;
@@ -23,8 +24,8 @@ public class GameTest {
 	@Test
 	public void testInitGobanAndPlayers() {
 		Goban goban = new Goban(9);
-		IPlayer blackPlayer = new TestPlayer();
-		IPlayer whitePlayer = new TestPlayer();
+		IPlayer blackPlayer = new DeterminedPlayer();
+		IPlayer whitePlayer = new DeterminedPlayer();
 		Game game = new Game(goban, blackPlayer, whitePlayer);
 		assertEquals(goban, game.getGoban());
 		assertEquals(blackPlayer, game.getPlayer(StoneColor.BLACK));
@@ -34,14 +35,14 @@ public class GameTest {
 	@Test
 	public void testPlayerColor() {
 		Goban goban = new Goban(9);
-		IPlayer blackPlayer = new TestPlayer();
-		IPlayer whitePlayer = new TestPlayer();
+		IPlayer blackPlayer = new DeterminedPlayer();
+		IPlayer whitePlayer = new DeterminedPlayer();
 		Game game = new Game(goban, blackPlayer, whitePlayer);
 		assertEquals(goban, game.getGoban());
 		assertEquals(StoneColor.BLACK, game.getPlayerColor(blackPlayer));
 		assertEquals(StoneColor.WHITE, game.getPlayerColor(whitePlayer));
 		try {
-			game.getPlayerColor(new TestPlayer());
+			game.getPlayerColor(new DeterminedPlayer());
 			fail("No exception thrown for unknown player");
 		} catch (UnknownPlayerException e) {
 		}
@@ -50,15 +51,15 @@ public class GameTest {
 	@Test
 	public void testWinnerOnFinish() {
 		Goban goban = new Goban(9);
-		IPlayer blackPlayer = new TestPlayer();
-		IPlayer whitePlayer = new TestPlayer();
+		IPlayer blackPlayer = new DeterminedPlayer();
+		IPlayer whitePlayer = new DeterminedPlayer();
 		Game game = new Game(goban, blackPlayer, whitePlayer);
 		game.finish(blackPlayer);
 		assertEquals(blackPlayer, game.getWinner());
 		game.finish(whitePlayer);
 		assertEquals(whitePlayer, game.getWinner());
 		try {
-			game.finish(new TestPlayer());
+			game.finish(new DeterminedPlayer());
 			fail("No exception thrown for unknown player");
 		} catch (UnknownPlayerException e) {
 		}
@@ -67,8 +68,8 @@ public class GameTest {
 	@Test
 	public void testIsFinished() {
 		Goban goban = new Goban(9);
-		IPlayer blackPlayer = new TestPlayer();
-		IPlayer whitePlayer = new TestPlayer();
+		IPlayer blackPlayer = new DeterminedPlayer();
+		IPlayer whitePlayer = new DeterminedPlayer();
 		Game game = new Game(goban, blackPlayer, whitePlayer);
 		assertFalse(game.isFinished());
 		game.finish(blackPlayer);
@@ -79,7 +80,7 @@ public class GameTest {
 	public void testPlayTurns() {
 		Goban goban = new Goban(9);
 		final IPlayer[] lastPlayer = new IPlayer[1];
-		IPlayer blackPlayer = new TestPlayer() {
+		IPlayer blackPlayer = new StrategicalPlayer(new FirstFreeStrategy()) {
 			@Override
 			public IMove play(Goban goban) {
 				if (lastPlayer[0] == this) {
@@ -90,7 +91,7 @@ public class GameTest {
 				return super.play(goban);
 			}
 		};
-		IPlayer whitePlayer = new TestPlayer() {
+		IPlayer whitePlayer = new StrategicalPlayer(new FirstFreeStrategy()) {
 			@Override
 			public IMove play(Goban goban) {
 				if (lastPlayer[0] == this) {
@@ -224,11 +225,4 @@ public class GameTest {
 				game.getLostStonesCount(StoneColor.WHITE));
 	}
 
-	static class TestPlayer extends StrategicalPlayer {
-
-		public TestPlayer() {
-			super(new FirstFreeStrategy());
-		}
-
-	}
 }
