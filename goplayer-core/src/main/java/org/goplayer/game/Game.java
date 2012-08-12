@@ -140,8 +140,7 @@ public class Game {
 			IPlayer player = getNextPlayer();
 			IMove move = player.play(getGoban());
 			if (move instanceof StoneMove) {
-				StoneMove stoneMove = (StoneMove) move;
-				Coord coord = stoneMove.getCoord();
+				Coord coord = ((StoneMove) move).getCoord();
 				if (getGoban().getCoordContent(coord) != null) {
 					throw new RuntimeException(getPlayerColor(player) + " cannot play " + move
 							+ ", the place is not free");
