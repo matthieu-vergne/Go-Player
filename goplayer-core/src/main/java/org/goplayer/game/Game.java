@@ -182,6 +182,7 @@ public class Game {
 
 	private IPlayer computeWinner() {
 		// TODO compute winner using user feedback
+		// TODO consider komi parameter
 		return players.get(StoneColor.BLACK);
 	}
 
