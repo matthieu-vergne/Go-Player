@@ -1,11 +1,10 @@
-package org.goplayer.util;
+package org.goplayer.game;
 
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.goplayer.game.Game;
 import org.goplayer.game.strategy.IStrategy;
 import org.goplayer.go.Goban;
 import org.goplayer.move.AbandonMove;
@@ -13,9 +12,10 @@ import org.goplayer.move.IMove;
 import org.goplayer.move.StoneMove;
 import org.goplayer.player.IPlayer;
 import org.goplayer.player.StrategicalPlayer;
+import org.goplayer.util.Coord;
 import org.junit.Test;
 
-public class MoveHistoryTest {
+public class GameHistoryTest {
 
 	@Test
 	public void testHistory() {
@@ -108,7 +108,7 @@ public class MoveHistoryTest {
 			game.play();
 		}
 
-		MoveHistory history = game.getHistory();
+		GameHistory history = game.getHistory();
 		assertEquals(steps.size(), history.size());
 		for (int i = 0; i < steps.size(); i++) {
 			Coord expected = steps.get(0).getCoord();
@@ -239,7 +239,7 @@ public class MoveHistoryTest {
 		}
 
 		// full
-		MoveHistory history = game.getHistory();
+		GameHistory history = game.getHistory();
 		List<Integer> maches = history.getEquivalentGobansIndexes(goban);
 		assertEquals(3, maches.size());
 		assertTrue(maches.contains(13));

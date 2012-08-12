@@ -21,7 +21,6 @@ import org.goplayer.move.StoneMove;
 import org.goplayer.player.DeterminedPlayer;
 import org.goplayer.player.IPlayer;
 import org.goplayer.util.Coord;
-import org.goplayer.util.MoveHistory;
 
 public class Game {
 
@@ -31,7 +30,7 @@ public class Game {
 	private StoneColor nextPlayerColor = StoneColor.BLACK;
 	private boolean previousHasPassed = false;
 	private IPlayer winner = null;
-	private final MoveHistory history = new MoveHistory();
+	private final GameHistory history = new GameHistory();
 
 	public Game(Goban goban, IPlayer blackPlayer, IPlayer whitePlayer) {
 		if (getRunningGameOn(goban) != null) {
@@ -156,7 +155,7 @@ public class Game {
 					Goban gobanState = goban.clone();
 					Stone stone = new Stone(nextPlayerColor);
 					getGoban().setCoordContent(coord, stone);
-					history.add(coord, stone, gobanState);
+					history.add(gobanState, coord, stone);
 					captureStones();
 				}
 				previousHasPassed = false;
@@ -190,7 +189,7 @@ public class Game {
 		return winner;
 	}
 
-	public MoveHistory getHistory() {
+	public GameHistory getHistory() {
 		return history.clone();
 	}
 

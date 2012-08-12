@@ -1,4 +1,4 @@
-package org.goplayer.util;
+package org.goplayer.game;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,32 +7,33 @@ import java.util.List;
 
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
+import org.goplayer.util.Coord;
 
 @SuppressWarnings("serial")
-public class MoveHistory extends LinkedList<MoveHistory.Entry> {
+public class GameHistory extends LinkedList<GameHistory.Entry> {
 
-	public boolean add(Coord coord, Stone stone, Goban goban) {
-		return super.add(new Entry(coord, stone, goban));
+	public boolean add(Goban goban, Coord coord, Stone stone) {
+		return super.add(new Entry(goban, coord, stone));
 	}
 
 	public static class Entry {
+		private final Goban goban;
 		private final Coord coord;
 		private final Stone stone;
-		private final Goban goban;
 
 		/**
 		 * 
+		 * @param goban
+		 *            the state of the goban <b>before</b> the move
 		 * @param coord
 		 *            the coordinate of the move
 		 * @param stone
 		 *            the stone placed at the given coordinate
-		 * @param goban
-		 *            the state of the goban <b>before</b> the move
 		 */
-		public Entry(Coord coord, Stone stone, Goban goban) {
+		public Entry(Goban goban, Coord coord, Stone stone) {
+			this.goban = goban;
 			this.coord = coord;
 			this.stone = stone;
-			this.goban = goban;
 		}
 
 		/**
@@ -66,8 +67,8 @@ public class MoveHistory extends LinkedList<MoveHistory.Entry> {
 	}
 
 	@Override
-	public MoveHistory clone() {
-		MoveHistory clone = new MoveHistory();
+	public GameHistory clone() {
+		GameHistory clone = new GameHistory();
 		clone.addAll(this);
 		return clone;
 	}
