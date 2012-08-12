@@ -16,27 +16,27 @@ import org.junit.Test;
 public class BlockTest {
 
 	@Test
-	public void testGenerationFromFreePlace() {
+	public void testBlockCoveringFreePlace() {
 		int size = 5;
 		Goban goban = new Goban(size);
 		int startRow = 2;
 		int startCol = 3;
 		try {
-			Block.generateFrom(goban, startRow, startCol);
+			Block.getBlockCovering(goban, startRow, startCol);
 			fail("No exception thrown");
 		} catch (IllegalArgumentException e) {
 		}
 	}
 
 	@Test
-	public void testGenerationFromIsolatedPlace() {
+	public void testBlockCoveringIsolatedPlace() {
 		int size = 5;
 		Goban goban = new Goban(size);
 		int startRow = 2;
 		int startCol = 3;
 		goban.setCoordContent(startRow, startCol, new Stone(StoneColor.BLACK));
 
-		Block block = Block.generateFrom(goban, startRow, startCol);
+		Block block = Block.getBlockCovering(goban, startRow, startCol);
 		assertEquals(1, block.getStones().size());
 		assertTrue(block.getStones().contains(
 				goban.getCoordContent(startRow, startCol)));
@@ -53,13 +53,13 @@ public class BlockTest {
 	}
 
 	@Test
-	public void testGenerationFromFullGoban() {
+	public void testBlockCoveringFullGoban() {
 		int size = 5;
 		Goban goban = Goban.createFullGoban(size, size, StoneColor.BLACK);
 		int startRow = 2;
 		int startCol = 3;
 
-		Block block = Block.generateFrom(goban, startRow, startCol);
+		Block block = Block.getBlockCovering(goban, startRow, startCol);
 		assertEquals(size * size, block.getStones().size());
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
@@ -72,7 +72,7 @@ public class BlockTest {
 	}
 
 	@Test
-	public void testGenerationFromCustomBlock() {
+	public void testBlockCoveringCustomBlock() {
 		int size = 5;
 		Goban goban = new Goban(size);
 
@@ -130,7 +130,7 @@ public class BlockTest {
 
 		// check equivalence whatever we take as a start
 		for (Coord start : target.keySet()) {
-			Block block = Block.generateFrom(goban, start);
+			Block block = Block.getBlockCovering(goban, start);
 			assertTrue(block.getStones().containsAll(target.values()));
 			assertTrue(target.values().containsAll(block.getStones()));
 			assertTrue(block.getLiberties().containsAll(liberties));

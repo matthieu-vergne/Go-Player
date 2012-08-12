@@ -44,11 +44,11 @@ public class Block implements Iterable<Stone> {
 		return stones.contains(stone);
 	}
 
-	public static Block generateFrom(Goban goban, Coord start) {
-		return generateFrom(goban, start.getRow(), start.getCol());
+	public static Block getBlockCovering(Goban goban, Coord start) {
+		return getBlockCovering(goban, start.getRow(), start.getCol());
 	}
 
-	public static Block generateFrom(Goban goban, int startRow, int startCol) {
+	public static Block getBlockCovering(Goban goban, int startRow, int startCol) {
 		final Stone reference = goban.getCoordContent(startRow, startCol);
 		if (reference == null) {
 			throw new IllegalArgumentException("No stone is at "
@@ -106,7 +106,8 @@ public class Block implements Iterable<Stone> {
 			if (isStoneInAllBlocks(stone, blocks)) {
 				continue;
 			} else {
-				Block block = generateFrom(goban, goban.getStoneCoord(stone));
+				Block block = getBlockCovering(goban,
+						goban.getStoneCoord(stone));
 				blocks.add(block);
 			}
 		}

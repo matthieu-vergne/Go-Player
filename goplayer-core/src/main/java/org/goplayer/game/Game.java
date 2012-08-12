@@ -76,7 +76,8 @@ public class Game {
 		 * Re-check the block of the last stone. If well played, it should be
 		 * not captured.
 		 */
-		Block block = Block.generateFrom(goban, history.getLast().getCoord());
+		Block block = Block.getBlockCovering(goban, history.getLast()
+				.getCoord());
 		captureBlockIfSurrounded(block);
 	}
 
