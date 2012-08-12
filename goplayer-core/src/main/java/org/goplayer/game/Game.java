@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.goplayer.exception.NotFreeCoordException;
+import org.goplayer.exception.SuicideException;
 import org.goplayer.exception.UnknownPlayerException;
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
@@ -16,6 +17,7 @@ import org.goplayer.move.AbandonMove;
 import org.goplayer.move.IMove;
 import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
+import org.goplayer.player.DeterminedPlayer;
 import org.goplayer.player.IPlayer;
 import org.goplayer.util.Coord;
 import org.goplayer.util.MoveHistory;
@@ -145,6 +147,9 @@ public class Game {
 				StoneColor color = getPlayerColor(player);
 				if (getGoban().getCoordContent(coord) != null) {
 					throw new NotFreeCoordException(color, coord);
+				} else if (!isSuicideAllowed()
+						&& isSuicide(nextPlayerColor, coord)) {
+					throw new SuicideException(color, coord);
 				} else {
 					Stone stone = new Stone(nextPlayerColor);
 					getGoban().setCoordContent(coord, stone);
@@ -236,5 +241,28 @@ public class Game {
 			}
 		}
 		return null;
+	}
+
+	private boolean isSuicideAllowed = true;
+
+	public boolean isSuicideAllowed() {
+		return isSuicideAllowed;
+	}
+
+	public void setSuicideAllowed(boolean isSuicideForbiden) {
+		this.isSuicideAllowed = isSuicideForbiden;
+	}
+
+	public boolean isSuicide(StoneColor color, Coord coord) {
+		Map<StoneColor, IPlayer> fakePlayers = new HashMap<StoneColor, IPlayer>(
+				players);
+		fakePlayers.put(color, new DeterminedPlayer(coord));
+		Game fakeGame = new Game(goban.clone(),
+				fakePlayers.get(StoneColor.BLACK),
+				fakePlayers.get(StoneColor.WHITE));
+		fakeGame.setSuicideAllowed(true); // avoid redo suicide checks
+		fakeGame.setNextPlayerColor(color);
+		fakeGame.play();
+		return fakeGame.getGoban().getCoordContent(coord) == null;
 	}
 }

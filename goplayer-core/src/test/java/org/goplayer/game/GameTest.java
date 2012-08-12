@@ -5,10 +5,12 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.goplayer.exception.SuicideException;
 import org.goplayer.exception.UnknownPlayerException;
 import org.goplayer.game.strategy.FirstFreeStrategy;
 import org.goplayer.game.strategy.IStrategy;
 import org.goplayer.go.Goban;
+import org.goplayer.go.Stone;
 import org.goplayer.go.StoneColor;
 import org.goplayer.move.AbandonMove;
 import org.goplayer.move.IMove;
@@ -16,6 +18,7 @@ import org.goplayer.move.StoneMove;
 import org.goplayer.player.DeterminedPlayer;
 import org.goplayer.player.IPlayer;
 import org.goplayer.player.StrategicalPlayer;
+import org.goplayer.util.Coord;
 import org.goplayer.util.ScoreCouple;
 import org.junit.Test;
 
@@ -103,6 +106,7 @@ public class GameTest {
 			}
 		};
 		Game game = new Game(goban, blackPlayer, whitePlayer);
+		game.setSuicideAllowed(true);
 		for (int i = 0; i < 50; i++) {
 			game.play();
 		}
@@ -225,4 +229,240 @@ public class GameTest {
 				game.getLostStonesCount(StoneColor.WHITE));
 	}
 
+	@Test
+	public void testSuicideCheckOnIsolatedSuicide() {
+		Goban goban = new Goban(5);
+		IPlayer blackPlayer = new DeterminedPlayer();
+		IPlayer whitePlayer = new DeterminedPlayer();
+		Game game = new Game(goban, blackPlayer, whitePlayer);
+
+		// -----
+		// -----
+		// -----
+		// -----
+		// -----
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(2, 2)));
+
+		goban.setCoordContent(1, 2, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -----
+		// -----
+		// -----
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(2, 2)));
+
+		goban.setCoordContent(2, 1, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -X---
+		// -----
+		// -----
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(2, 2)));
+
+		goban.setCoordContent(2, 3, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -X-X-
+		// -----
+		// -----
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(2, 2)));
+
+		goban.setCoordContent(3, 2, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -X-X-
+		// --X--
+		// -----
+		assertTrue(game.isSuicide(StoneColor.WHITE, new Coord(2, 2)));
+	}
+
+	@Test
+	public void testSuicideCheckOnBlockSuicide() {
+		Goban goban = new Goban(5);
+		IPlayer blackPlayer = new DeterminedPlayer();
+		IPlayer whitePlayer = new DeterminedPlayer();
+		Game game = new Game(goban, blackPlayer, whitePlayer);
+
+		// -----
+		// -----
+		// -----
+		// -----
+		// -----
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(1, 2, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -----
+		// -----
+		// -----
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(2, 1, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -X---
+		// -----
+		// -----
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(2, 3, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -X-X-
+		// -----
+		// -----
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(3, 0, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -X-X-
+		// X----
+		// -----
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(3, 4, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -X-X-
+		// X---X
+		// -----
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(4, 1, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -X-X-
+		// X---X
+		// -X---
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(4, 2, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -X-X-
+		// X---X
+		// -XX--
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(4, 3, new Stone(StoneColor.BLACK));
+		// -----
+		// --X--
+		// -X-X-
+		// X---X
+		// -XXX-
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(2, 2, new Stone(StoneColor.WHITE));
+		// -----
+		// --X--
+		// -XOX-
+		// X---X
+		// -XXX-
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(3, 1, new Stone(StoneColor.WHITE));
+		// -----
+		// --X--
+		// -XOX-
+		// XO--X
+		// -XXX-
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(3, 3, new Stone(StoneColor.WHITE));
+		// -----
+		// --X--
+		// -XOX-
+		// XO-OX
+		// -XXX-
+		assertTrue(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+
+		goban.setCoordContent(3, 4, null);
+		// -----
+		// --X--
+		// -XOX-
+		// XO-O-
+		// -XXX-
+		assertFalse(game.isSuicide(StoneColor.WHITE, new Coord(3, 2)));
+	}
+
+	@Test
+	public void testSuicideRuleOnIsolatedSuicide() {
+		// -----
+		// --X--
+		// -X-X-
+		// --X--
+		// -----
+		Goban goban = new Goban(5);
+		goban.setCoordContent(1, 2, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(2, 1, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(2, 3, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(3, 2, new Stone(StoneColor.BLACK));
+
+		{
+			IPlayer blackPlayer = new DeterminedPlayer();
+			IPlayer whitePlayer = new DeterminedPlayer(new Coord(2, 2));
+			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			game.setSuicideAllowed(true);
+			game.setNextPlayerColor(StoneColor.WHITE);
+			game.play();
+		}
+
+		{
+			IPlayer blackPlayer = new DeterminedPlayer();
+			IPlayer whitePlayer = new DeterminedPlayer(new Coord(2, 2));
+			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			game.setSuicideAllowed(false);
+			game.setNextPlayerColor(StoneColor.WHITE);
+			try {
+				game.play();
+				fail("No exception thrown.");
+			} catch (SuicideException e) {
+			}
+		}
+	}
+
+	@Test
+	public void testSuicideRuleOnBlockSuicide() {
+		// -----
+		// --X--
+		// -XOX-
+		// XO-OX
+		// -XXX-
+		Goban goban = new Goban(5);
+		goban.setCoordContent(1, 2, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(2, 1, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(2, 3, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(3, 0, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(3, 4, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(4, 1, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(4, 2, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(4, 3, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(2, 2, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(3, 1, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(3, 3, new Stone(StoneColor.WHITE));
+
+		{
+			IPlayer blackPlayer = new DeterminedPlayer();
+			IPlayer whitePlayer = new DeterminedPlayer(new Coord(3, 2));
+			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			game.setSuicideAllowed(true);
+			game.setNextPlayerColor(StoneColor.WHITE);
+			game.play();
+		}
+
+		{
+			IPlayer blackPlayer = new DeterminedPlayer();
+			IPlayer whitePlayer = new DeterminedPlayer(new Coord(3, 2));
+			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			game.setSuicideAllowed(false);
+			game.setNextPlayerColor(StoneColor.WHITE);
+			try {
+				game.play();
+				fail("No exception thrown.");
+			} catch (SuicideException e) {
+			}
+		}
+	}
 }
