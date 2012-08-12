@@ -75,6 +75,28 @@ public class Block implements Iterable<Stone> {
 		return stones.contains(stone);
 	}
 
+	public static Set<Block> getBlocksCovering(Goban goban,
+			Collection<Coord> starts) {
+		Set<Block> blocks = new HashSet<Block>();
+		for (Coord start : starts) {
+			boolean alreadyCovered = false;
+			for (Block block : blocks) {
+				if (block.contains(goban.getCoordContent(start))) {
+					alreadyCovered = true;
+					break;
+				} else {
+					continue;
+				}
+			}
+			if (alreadyCovered) {
+				continue;
+			} else {
+				blocks.add(getBlockCovering(goban, start.getRow(), start.getCol()));
+			}
+		}
+		return blocks;
+	}
+
 	public static Block getBlockCovering(Goban goban, Coord start) {
 		return getBlockCovering(goban, start.getRow(), start.getCol());
 	}

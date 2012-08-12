@@ -2,8 +2,12 @@ package org.goplayer.game;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -183,5 +187,112 @@ public class BlockTest {
 			assertTrue(liberties.containsAll(block.getLiberties()));
 			assertEquals(StoneColor.WHITE, block.getColor());
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testBlocksCoveringCustomGoban() {
+		// X----
+		// XXX--
+		// -X---
+		// -XXX-
+		// -----
+		Map<Coord, Stone> group1 = new HashMap<Coord, Stone>();
+		group1.put(new Coord(0, 0), new Stone(StoneColor.BLACK));
+		group1.put(new Coord(1, 0), new Stone(StoneColor.BLACK));
+		group1.put(new Coord(1, 1), new Stone(StoneColor.BLACK));
+		group1.put(new Coord(1, 2), new Stone(StoneColor.BLACK));
+		group1.put(new Coord(2, 1), new Stone(StoneColor.BLACK));
+		group1.put(new Coord(3, 1), new Stone(StoneColor.BLACK));
+		group1.put(new Coord(3, 2), new Stone(StoneColor.BLACK));
+		group1.put(new Coord(3, 3), new Stone(StoneColor.BLACK));
+
+		// X----
+		// XXX--
+		// -XOO-
+		// -XXX-
+		// -----
+		Map<Coord, Stone> group2 = new HashMap<Coord, Stone>();
+		group2.put(new Coord(2, 2), new Stone(StoneColor.WHITE));
+		group2.put(new Coord(2, 3), new Stone(StoneColor.WHITE));
+
+		// X----
+		// XXX--
+		// OXOO-
+		// OXXX-
+		// OO---
+		Map<Coord, Stone> group3 = new HashMap<Coord, Stone>();
+		group3.put(new Coord(2, 0), new Stone(StoneColor.WHITE));
+		group3.put(new Coord(3, 0), new Stone(StoneColor.WHITE));
+		group3.put(new Coord(4, 0), new Stone(StoneColor.WHITE));
+		group3.put(new Coord(4, 1), new Stone(StoneColor.WHITE));
+
+		// create goban
+		Goban goban = new Goban(5);
+		for (Map<Coord, Stone> group : Arrays.asList(group1, group2, group3)) {
+			for (Map.Entry<Coord, Stone> entry : group.entrySet()) {
+				goban.setCoordContent(entry.getKey(), entry.getValue());
+			}
+		}
+
+		// get blocks
+		Coord coord1 = group1.keySet().iterator().next();
+		Coord coord2 = group2.keySet().iterator().next();
+		Coord coord3 = group3.keySet().iterator().next();
+		List<Coord> starts = new ArrayList<Coord>(Arrays.asList(coord1, coord2,
+				coord3));
+		Set<Block> blocks = Block.getBlocksCovering(goban, starts);
+
+		// test enough blocks
+		assertEquals(3, blocks.size());
+
+		// test each block correspond to a start
+		for (Block block : blocks) {
+			int index = -1;
+			for (int i = 0; i < starts.size(); i++) {
+				Coord coord = starts.get(i);
+				if (block.contains(goban.getCoordContent(coord))) {
+					if (index >= 0) {
+						fail("One block contains both " + starts.get(index)
+								+ " and " + coord);
+					} else {
+						index = i;
+					}
+				} else {
+					continue;
+				}
+			}
+			starts.remove(index);
+		}
+		assertEquals(0, starts.size());
+	}
+
+	@Test
+	public void testBlocksCoveringUnicity() {
+		Goban goban = new Goban(5);
+		goban.setCoordContent(0, 0, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(1, 0, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(1, 1, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(1, 2, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(2, 1, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(3, 1, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(3, 2, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(3, 3, new Stone(StoneColor.BLACK));
+
+		// get expected block
+		Block block1 = Block.getBlockCovering(goban, new Coord(0, 0));
+		Collection<Stone> stones1 = block1.getStones();
+		Collection<Coord> coords = new HashSet<Coord>();
+		for (Stone stone : stones1) {
+			coords.add(goban.getStoneCoord(stone));
+		}
+
+		// test unique block
+		Set<Block> blocks = Block.getBlocksCovering(goban, coords);
+		assertEquals(1, blocks.size());
+
+		// test block equivalence
+		Block block2 = blocks.iterator().next();
+		assertEquals(block1, block2);
 	}
 }
