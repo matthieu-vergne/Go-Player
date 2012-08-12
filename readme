@@ -1,0 +1,23 @@
+GO-PLAYER
+
+This Java project is a personal attempt to implement an Artificial Intelligence (AI) to play Go (the Japanese game: http://en.wikipedia.org/wiki/Rules_of_Go). For that, several things need to be done first:
+- give a robust framework to be able to play Go in a consistent way (considering rules such as Ko, Komi, ...)
+- give the possibility to implement specific strategies to furnish to virtual players
+
+These points are close to be done, and a lot of tests are already implemented to guarantee the robustness. There is only a few Javadoc (it will be fully completed later), but the classes and methods are simple (mostly) and named in a really explicit way (but if you have better to suggest, just do it {^_°}). It is already possible to implement strategies for players, so people can start now to implement their own AI attempts. Some rules are also present (suicide & Ko) and have their own evaluation methods (i.e. is this move forbidden by such rule?), so you can use them without caring about how to compute them {^_^}.
+
+How to start?
+
+I suppose you have a Jar of this project (if not, clone this repository and generate it yourself, Googel is your friend {^_°}). Then, you can use these classes:
+- org.goplayer.go.Goban (to create a Goban)
+- org.goplayer.game.strategy.IStrategy (to create a player strategy)
+- org.goplayer.player.StrategicalPlayer (to create a new player who will use a strategy)
+- org.goplayer.game.Game (to create a new game, which needs a goban and two players)
+- org.goplayer.move.* (contains the possible moves)
+
+
+I let you see with the auto-completion of your favorite IDE what are the other useful classes and their specific methods. Feel free to contact me for *any* question (matthieu.vergne@gmail.com).
+
+Have fun. {^_^}v
+
+Matth
