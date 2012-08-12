@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.goplayer.exception.NotFreeCoordException;
 import org.goplayer.exception.UnknownPlayerException;
 import org.goplayer.go.Goban;
 import org.goplayer.go.Stone;
@@ -141,9 +142,9 @@ public class Game {
 			IMove move = player.play(getGoban());
 			if (move instanceof StoneMove) {
 				Coord coord = ((StoneMove) move).getCoord();
+				StoneColor color = getPlayerColor(player);
 				if (getGoban().getCoordContent(coord) != null) {
-					throw new RuntimeException(getPlayerColor(player) + " cannot play " + move
-							+ ", the place is not free");
+					throw new NotFreeCoordException(color, coord);
 				} else {
 					Stone stone = new Stone(nextPlayerColor);
 					getGoban().setCoordContent(coord, stone);
