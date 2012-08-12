@@ -22,6 +22,8 @@ import org.goplayer.player.DeterminedPlayer;
 import org.goplayer.player.IPlayer;
 import org.goplayer.util.Coord;
 
+// TODO implement a graphical version
+// TODO javadoc for all classes
 public class Game {
 
 	private final Goban goban;
