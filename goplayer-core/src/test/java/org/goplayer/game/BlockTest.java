@@ -16,6 +16,29 @@ import org.junit.Test;
 public class BlockTest {
 
 	@Test
+	public void testEquality() {
+		Map<Coord, Stone> stones = new HashMap<Coord, Stone>();
+		stones.put(new Coord(0, 0), new Stone(StoneColor.BLACK));
+		stones.put(new Coord(1, 0), new Stone(StoneColor.BLACK));
+		stones.put(new Coord(1, 1), new Stone(StoneColor.BLACK));
+		stones.put(new Coord(1, 2), new Stone(StoneColor.BLACK));
+		stones.put(new Coord(2, 1), new Stone(StoneColor.BLACK));
+		stones.put(new Coord(3, 1), new Stone(StoneColor.BLACK));
+		stones.put(new Coord(3, 2), new Stone(StoneColor.BLACK));
+		stones.put(new Coord(3, 3), new Stone(StoneColor.BLACK));
+
+		Goban goban = new Goban(5);
+		for (Map.Entry<Coord, Stone> entry : stones.entrySet()) {
+			goban.setCoordContent(entry.getKey(), entry.getValue());
+		}
+		Block b1 = Block.getBlockCovering(goban, 0, 0);
+		Block b2 = Block.getBlockCovering(goban, 0, 0);
+		assertFalse(b1 == b2);
+		assertTrue(b1.equals(b2));
+		assertTrue(b2.equals(b1));
+	}
+
+	@Test
 	public void testBlockCoveringFreePlace() {
 		int size = 5;
 		Goban goban = new Goban(size);

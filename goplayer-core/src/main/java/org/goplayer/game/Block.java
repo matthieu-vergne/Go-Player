@@ -18,6 +18,32 @@ public class Block implements Iterable<Stone> {
 	private final Set<Stone> stones;
 	private final Set<Coord> liberties;
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		} else if (obj instanceof Block) {
+			Block b = (Block) obj;
+			return stones.containsAll(b.stones) && b.stones.containsAll(stones)
+					&& liberties.containsAll(b.liberties)
+					&& b.liberties.containsAll(liberties);
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		for (Stone stone : stones) {
+			hash += stone.hashCode();
+		}
+		for (Coord liberty : liberties) {
+			hash += liberty.hashCode();
+		}
+		return hash;
+	}
+
 	private Block(Collection<Stone> stones, Collection<Coord> liberties) {
 		this.stones = Collections.unmodifiableSet(new HashSet<Stone>(stones));
 		this.liberties = Collections.unmodifiableSet(new HashSet<Coord>(
