@@ -249,8 +249,8 @@ public class Game {
 		return isSuicideAllowed;
 	}
 
-	public void setSuicideAllowed(boolean isSuicideForbiden) {
-		this.isSuicideAllowed = isSuicideForbiden;
+	public void setSuicideAllowed(boolean allowed) {
+		this.isSuicideAllowed = allowed;
 	}
 
 	public boolean isSuicide(StoneColor color, Coord coord) {
