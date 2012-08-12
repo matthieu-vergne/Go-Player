@@ -109,8 +109,16 @@ public class Game {
 		return nextPlayerColor;
 	}
 
+	public void setNextPlayerColor(StoneColor color) {
+		nextPlayerColor = color;
+	}
+
 	public IPlayer getNextPlayer() {
 		return players.get(getNextPlayerColor());
+	}
+
+	public void setNextPlayer(IPlayer player) {
+		setNextPlayerColor(getPlayerColor(player));
 	}
 
 	public void finish(IPlayer winner) {
