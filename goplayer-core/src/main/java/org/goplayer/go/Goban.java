@@ -116,4 +116,40 @@ public class Goban {
 		return coord.getRow() >= getRowCount() || coord.getRow() < 0
 				|| coord.getCol() >= getColCount() || coord.getCol() < 0;
 	}
+
+	public boolean isEquivalentTo(Goban goban) {
+		if (getRowCount() != goban.getRowCount()) {
+			return false;
+		} else if (getColCount() != goban.getColCount()) {
+			return false;
+		} else {
+			for (int row = 0; row < getRowCount(); row++) {
+				for (int col = 0; col < getColCount(); col++) {
+					Stone s1 = getCoordContent(row, col);
+					Stone s2 = goban.getCoordContent(row, col);
+					if (s1 == null) {
+						if (s2 == null) {
+							continue;
+						} else {
+							// empty but filled
+							return false;
+						}
+					} else {
+						if (s2 == null) {
+							// filled but empty
+							return false;
+						} else {
+							if (s1.getColor() == s2.getColor()) {
+								continue;
+							} else {
+								// different stone colors
+								return false;
+							}
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
 }

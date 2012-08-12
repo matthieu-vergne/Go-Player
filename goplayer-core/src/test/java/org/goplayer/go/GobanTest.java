@@ -217,4 +217,70 @@ public class GobanTest {
 		assertTrue(goban.isOut(new Coord(-3, -2)));
 		assertTrue(goban.isOut(new Coord(13, 208)));
 	}
+
+	@Test
+	public void testEquivalencies() {
+		Goban reference = new Goban(5);
+		assertTrue(reference.isEquivalentTo(reference));
+		
+		{
+			Goban compared = new Goban(5, 6);
+			assertFalse(reference.isEquivalentTo(compared));
+			assertFalse(compared.isEquivalentTo(reference));
+		}
+		
+		{
+			Goban compared = new Goban(3, 5);
+			assertFalse(reference.isEquivalentTo(compared));
+			assertFalse(compared.isEquivalentTo(reference));
+		}
+		
+		{
+			Goban compared = new Goban(5);
+			assertTrue(reference.isEquivalentTo(compared));
+			assertTrue(compared.isEquivalentTo(reference));
+		}
+		
+		reference.setCoordContent(0, 0, new Stone(StoneColor.BLACK));
+		reference.setCoordContent(1, 1, new Stone(StoneColor.WHITE));
+		assertTrue(reference.isEquivalentTo(reference));
+		
+		{
+			Goban compared = new Goban(5);
+			assertFalse(reference.isEquivalentTo(compared));
+			assertFalse(compared.isEquivalentTo(reference));
+		}
+		
+		{
+			Goban compared = new Goban(5);
+			compared.setCoordContent(0, 0, new Stone(StoneColor.BLACK));
+			compared.setCoordContent(1, 1, new Stone(StoneColor.WHITE));
+			assertTrue(reference.isEquivalentTo(compared));
+			assertTrue(compared.isEquivalentTo(reference));
+		}
+		
+		{
+			Goban compared = new Goban(5);
+			compared.setCoordContent(0, 0, new Stone(StoneColor.BLACK));
+			assertFalse(reference.isEquivalentTo(compared));
+			assertFalse(compared.isEquivalentTo(reference));
+		}
+		
+		{
+			Goban compared = new Goban(5);
+			compared.setCoordContent(0, 1, new Stone(StoneColor.BLACK));
+			compared.setCoordContent(1, 1, new Stone(StoneColor.WHITE));
+			assertFalse(reference.isEquivalentTo(compared));
+			assertFalse(compared.isEquivalentTo(reference));
+		}
+		
+		{
+			Goban compared = new Goban(5);
+			compared.setCoordContent(0, 0, new Stone(StoneColor.BLACK));
+			compared.setCoordContent(1, 1, new Stone(StoneColor.WHITE));
+			compared.setCoordContent(2, 2, new Stone(StoneColor.WHITE));
+			assertFalse(reference.isEquivalentTo(compared));
+			assertFalse(compared.isEquivalentTo(reference));
+		}
+	}
 }
