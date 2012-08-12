@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.goplayer.exception.KoException;
 import org.goplayer.exception.NotFreeCoordException;
 import org.goplayer.exception.SuicideException;
 import org.goplayer.exception.UnknownPlayerException;
@@ -22,7 +23,6 @@ import org.goplayer.player.IPlayer;
 import org.goplayer.util.Coord;
 import org.goplayer.util.MoveHistory;
 
-// TODO manage ko rule
 public class Game {
 
 	private final Goban goban;
@@ -150,6 +150,8 @@ public class Game {
 				} else if (!isSuicideAllowed()
 						&& isSuicide(nextPlayerColor, coord)) {
 					throw new SuicideException(color, coord);
+				} else if (!isKoAllowed() && isKo(nextPlayerColor, coord)) {
+					throw new KoException(color, coord);
 				} else {
 					Goban gobanState = goban.clone();
 					Stone stone = new Stone(nextPlayerColor);
@@ -265,5 +267,29 @@ public class Game {
 		fakeGame.setNextPlayerColor(color);
 		fakeGame.play();
 		return fakeGame.getGoban().getCoordContent(coord) == null;
+	}
+
+	private boolean isKoAllowed = false;
+
+	public boolean isKoAllowed() {
+		return isKoAllowed;
+	}
+
+	public void setKoAllowed(boolean allowed) {
+		this.isKoAllowed = allowed;
+	}
+
+	public boolean isKo(StoneColor color, Coord coord) {
+		Map<StoneColor, IPlayer> fakePlayers = new HashMap<StoneColor, IPlayer>(
+				players);
+		fakePlayers.put(color, new DeterminedPlayer(coord));
+		Game fakeGame = new Game(goban.clone(),
+				fakePlayers.get(StoneColor.BLACK),
+				fakePlayers.get(StoneColor.WHITE));
+		fakeGame.history.addAll(history);
+		fakeGame.setKoAllowed(true); // avoid redo ko checks
+		fakeGame.setNextPlayerColor(color);
+		fakeGame.play();
+		return !history.getEquivalentGobansIndexes(fakeGame.goban, 1).isEmpty();
 	}
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.goplayer.exception.KoException;
 import org.goplayer.exception.SuicideException;
 import org.goplayer.exception.UnknownPlayerException;
 import org.goplayer.game.strategy.FirstFreeStrategy;
@@ -14,6 +15,7 @@ import org.goplayer.go.Stone;
 import org.goplayer.go.StoneColor;
 import org.goplayer.move.AbandonMove;
 import org.goplayer.move.IMove;
+import org.goplayer.move.PassMove;
 import org.goplayer.move.StoneMove;
 import org.goplayer.player.DeterminedPlayer;
 import org.goplayer.player.IPlayer;
@@ -107,6 +109,7 @@ public class GameTest {
 		};
 		Game game = new Game(goban, blackPlayer, whitePlayer);
 		game.setSuicideAllowed(true);
+		game.setKoAllowed(true);
 		for (int i = 0; i < 50; i++) {
 			game.play();
 		}
@@ -462,6 +465,200 @@ public class GameTest {
 				game.play();
 				fail("No exception thrown.");
 			} catch (SuicideException e) {
+			}
+		}
+	}
+
+	@Test
+	public void testKoCheck() {
+		Goban goban = new Goban(5);
+		IStrategy strategy = new IStrategy() {
+
+			private int step = -1;
+
+			@Override
+			public IMove chooseMove(Goban goban, IPlayer player) {
+				Game game = Game.getRunningGameOn(goban);
+				step++;
+				if (step == 0) {
+					// -----
+					// -----
+					// -----
+					// -----
+					// -----
+					assertFalse(game.isKo(StoneColor.BLACK, new Coord(1, 1)));
+					return new StoneMove(1, 1);
+				} else if (step == 1) {
+					// -----
+					// -X---
+					// -----
+					// -----
+					// -----
+					assertFalse(game.isKo(StoneColor.WHITE, new Coord(1, 2)));
+					return new StoneMove(1, 2);
+				} else if (step == 2) {
+					// -----
+					// -XO--
+					// -----
+					// -----
+					// -----
+					assertFalse(game.isKo(StoneColor.BLACK, new Coord(2, 0)));
+					return new StoneMove(2, 0);
+				} else if (step == 3) {
+					// -----
+					// -XO--
+					// X----
+					// -----
+					// -----
+					assertFalse(game.isKo(StoneColor.WHITE, new Coord(2, 1)));
+					return new StoneMove(2, 1);
+				} else if (step == 4) {
+					// -----
+					// -XO--
+					// XO---
+					// -----
+					// -----
+					assertFalse(game.isKo(StoneColor.BLACK, new Coord(3, 1)));
+					return new StoneMove(3, 1);
+				} else if (step == 5) {
+					// -----
+					// -XO--
+					// XO---
+					// -X---
+					// -----
+					assertFalse(game.isKo(StoneColor.WHITE, new Coord(3, 2)));
+					return new StoneMove(3, 2);
+				} else if (step == 6) {
+					// -----
+					// -XO--
+					// XO---
+					// -XO--
+					// -----
+					assertFalse(game.isKo(StoneColor.BLACK, new Coord(2, 2)));
+					return new StoneMove(2, 2);
+				} else if (step == 7) {
+					// -----
+					// -XO--
+					// X-X--
+					// -XO--
+					// -----
+					assertFalse(game.isKo(StoneColor.WHITE, new Coord(2, 3)));
+					return new StoneMove(2, 3);
+				} else if (step == 8) {
+					// -----
+					// -XO--
+					// X-XO-
+					// -XO--
+					// -----
+					assertFalse(game.isKo(StoneColor.BLACK, new Coord(1, 0)));
+					return new StoneMove(1, 0);
+				} else if (step == 9) {
+					// -----
+					// XXO--
+					// X-XO-
+					// -XO--
+					// -----
+					assertFalse(game.isKo(StoneColor.WHITE, new Coord(2, 1)));
+					return new StoneMove(2, 1);
+				} else if (step == 10) {
+					// -----
+					// XXO--
+					// XO-O-
+					// -XO--
+					// -----
+					assertTrue(game.isKo(StoneColor.BLACK, new Coord(2, 2)));
+					assertFalse(game.isKo(StoneColor.BLACK, new Coord(3, 0)));
+					return new StoneMove(3, 0);
+				} else if (step == 11) {
+					// -----
+					// XXO--
+					// XO-O-
+					// XXO--
+					// -----
+					assertFalse(game.isKo(StoneColor.WHITE, new Coord(1, 3)));
+					return new StoneMove(1, 3);
+				} else if (step == 12) {
+					// -----
+					// XXO0-
+					// XO-O-
+					// XXO--
+					// -----
+					assertFalse(game.isKo(StoneColor.BLACK, new Coord(2, 2)));
+					return new StoneMove(2, 2);
+				} else if (step == 13) {
+					// -----
+					// XXO0-
+					// X-XO-
+					// XXO--
+					// -----
+					assertTrue(game.isKo(StoneColor.WHITE, new Coord(2, 1)));
+					assertFalse(game.isKo(StoneColor.WHITE, new Coord(3, 3)));
+					return new StoneMove(3, 3);
+				} else if (step == 14) {
+					// -----
+					// XXO0-
+					// X-XO-
+					// XXOO-
+					// -----
+					assertFalse(game.isKo(StoneColor.BLACK, new Coord(2, 1)));
+					return new StoneMove(2, 1);
+				} else {
+					// -----
+					// XXO0-
+					// XXXO-
+					// XXOO-
+					// -----
+					return new PassMove();
+				}
+			}
+		};
+		IPlayer blackPlayer = new StrategicalPlayer(strategy);
+		IPlayer whitePlayer = new StrategicalPlayer(strategy);
+		Game game = new Game(goban, blackPlayer, whitePlayer);
+		while (!game.isFinished()) {
+			game.play();
+		}
+		// check tests have been done
+		assertEquals(15, game.getHistory().size());
+	}
+
+	@Test
+	public void testKoRule() {
+		// -----
+		// -XO--
+		// X-XO-
+		// -XO--
+		// -----
+		Goban goban = new Goban(5);
+		goban.setCoordContent(1, 1, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(2, 0, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(2, 2, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(3, 1, new Stone(StoneColor.BLACK));
+		goban.setCoordContent(1, 2, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(2, 3, new Stone(StoneColor.WHITE));
+		goban.setCoordContent(3, 2, new Stone(StoneColor.WHITE));
+
+		{
+			IPlayer blackPlayer = new DeterminedPlayer(new Coord(2, 2));
+			IPlayer whitePlayer = new DeterminedPlayer(new Coord(2, 1));
+			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			game.setKoAllowed(true);
+			game.setNextPlayerColor(StoneColor.WHITE);
+			game.play();
+			game.play();
+		}
+
+		{
+			IPlayer blackPlayer = new DeterminedPlayer(new Coord(2, 2));
+			IPlayer whitePlayer = new DeterminedPlayer(new Coord(2, 1));
+			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			game.setKoAllowed(false);
+			game.setNextPlayerColor(StoneColor.WHITE);
+			game.play();
+			try {
+				game.play();
+				fail("No exception thrown.");
+			} catch (KoException e) {
 			}
 		}
 	}
