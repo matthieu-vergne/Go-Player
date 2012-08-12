@@ -260,10 +260,9 @@ public class Game {
 		Map<StoneColor, IPlayer> fakePlayers = new HashMap<StoneColor, IPlayer>(
 				players);
 		fakePlayers.put(color, new DeterminedPlayer(coord));
-		Game fakeGame = new Game(goban.clone(),
+		Game fakeGame = createFreeGame(goban.clone(),
 				fakePlayers.get(StoneColor.BLACK),
 				fakePlayers.get(StoneColor.WHITE));
-		fakeGame.setSuicideAllowed(true); // avoid redo suicide checks
 		fakeGame.setNextPlayerColor(color);
 		fakeGame.play();
 		return fakeGame.getGoban().getCoordContent(coord) == null;
@@ -283,13 +282,19 @@ public class Game {
 		Map<StoneColor, IPlayer> fakePlayers = new HashMap<StoneColor, IPlayer>(
 				players);
 		fakePlayers.put(color, new DeterminedPlayer(coord));
-		Game fakeGame = new Game(goban.clone(),
+		Game fakeGame = createFreeGame(goban.clone(),
 				fakePlayers.get(StoneColor.BLACK),
 				fakePlayers.get(StoneColor.WHITE));
 		fakeGame.history.addAll(history);
-		fakeGame.setKoAllowed(true); // avoid redo ko checks
 		fakeGame.setNextPlayerColor(color);
 		fakeGame.play();
 		return !history.getEquivalentGobansIndexes(fakeGame.goban, 1).isEmpty();
+	}
+	
+	public static Game createFreeGame(Goban goban, IPlayer blackPlayer, IPlayer whitePlayer) {
+		Game game = new Game(goban, blackPlayer, whitePlayer);
+		game.setKoAllowed(true);
+		game.setSuicideAllowed(true);
+		return game ;
 	}
 }

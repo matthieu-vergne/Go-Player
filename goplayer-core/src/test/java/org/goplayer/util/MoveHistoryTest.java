@@ -233,8 +233,7 @@ public class MoveHistoryTest {
 		};
 		IPlayer blackPlayer = new StrategicalPlayer(strategy);
 		IPlayer whitePlayer = new StrategicalPlayer(strategy);
-		Game game = new Game(goban, blackPlayer, whitePlayer);
-		game.setKoAllowed(true);
+		Game game = Game.createFreeGame(goban, blackPlayer, whitePlayer);
 		while (!game.isFinished()) {
 			game.play();
 		}

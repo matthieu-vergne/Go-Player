@@ -107,9 +107,7 @@ public class GameTest {
 				return super.play(goban);
 			}
 		};
-		Game game = new Game(goban, blackPlayer, whitePlayer);
-		game.setSuicideAllowed(true);
-		game.setKoAllowed(true);
+		Game game = Game.createFreeGame(goban, blackPlayer, whitePlayer);
 		for (int i = 0; i < 50; i++) {
 			game.play();
 		}
@@ -406,7 +404,7 @@ public class GameTest {
 		{
 			IPlayer blackPlayer = new DeterminedPlayer();
 			IPlayer whitePlayer = new DeterminedPlayer(new Coord(2, 2));
-			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			Game game = Game.createFreeGame(goban.clone(), blackPlayer, whitePlayer);
 			game.setSuicideAllowed(true);
 			game.setNextPlayerColor(StoneColor.WHITE);
 			game.play();
@@ -415,7 +413,7 @@ public class GameTest {
 		{
 			IPlayer blackPlayer = new DeterminedPlayer();
 			IPlayer whitePlayer = new DeterminedPlayer(new Coord(2, 2));
-			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			Game game = Game.createFreeGame(goban.clone(), blackPlayer, whitePlayer);
 			game.setSuicideAllowed(false);
 			game.setNextPlayerColor(StoneColor.WHITE);
 			try {
@@ -449,7 +447,7 @@ public class GameTest {
 		{
 			IPlayer blackPlayer = new DeterminedPlayer();
 			IPlayer whitePlayer = new DeterminedPlayer(new Coord(3, 2));
-			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			Game game = Game.createFreeGame(goban.clone(), blackPlayer, whitePlayer);
 			game.setSuicideAllowed(true);
 			game.setNextPlayerColor(StoneColor.WHITE);
 			game.play();
@@ -458,7 +456,7 @@ public class GameTest {
 		{
 			IPlayer blackPlayer = new DeterminedPlayer();
 			IPlayer whitePlayer = new DeterminedPlayer(new Coord(3, 2));
-			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			Game game = Game.createFreeGame(goban.clone(), blackPlayer, whitePlayer);
 			game.setSuicideAllowed(false);
 			game.setNextPlayerColor(StoneColor.WHITE);
 			try {
@@ -641,7 +639,7 @@ public class GameTest {
 		{
 			IPlayer blackPlayer = new DeterminedPlayer(new Coord(2, 2));
 			IPlayer whitePlayer = new DeterminedPlayer(new Coord(2, 1));
-			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			Game game = Game.createFreeGame(goban.clone(), blackPlayer, whitePlayer);
 			game.setKoAllowed(true);
 			game.setNextPlayerColor(StoneColor.WHITE);
 			game.play();
@@ -651,7 +649,7 @@ public class GameTest {
 		{
 			IPlayer blackPlayer = new DeterminedPlayer(new Coord(2, 2));
 			IPlayer whitePlayer = new DeterminedPlayer(new Coord(2, 1));
-			Game game = new Game(goban.clone(), blackPlayer, whitePlayer);
+			Game game = Game.createFreeGame(goban.clone(), blackPlayer, whitePlayer);
 			game.setKoAllowed(false);
 			game.setNextPlayerColor(StoneColor.WHITE);
 			game.play();
@@ -661,5 +659,18 @@ public class GameTest {
 			} catch (KoException e) {
 			}
 		}
+	}
+
+	@Test
+	public void testFreeGameGeneration() {
+		Goban goban = new Goban(5);
+		IPlayer blackPlayer = new DeterminedPlayer();
+		IPlayer whitePlayer = new DeterminedPlayer();
+		Game game = Game.createFreeGame(goban, blackPlayer, whitePlayer);
+		assertEquals(goban, game.getGoban());
+		assertEquals(blackPlayer, game.getPlayer(StoneColor.BLACK));
+		assertEquals(whitePlayer, game.getPlayer(StoneColor.WHITE));
+		assertTrue(game.isKoAllowed());
+		assertTrue(game.isSuicideAllowed());
 	}
 }
