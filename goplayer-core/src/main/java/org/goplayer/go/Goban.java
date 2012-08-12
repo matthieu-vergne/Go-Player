@@ -97,7 +97,7 @@ public class Goban {
 	}
 
 	@Override
-	protected Goban clone() {
+	public Goban clone() {
 		Goban clone = new Goban(getRowCount(), getColCount());
 		for (int row = 0; row < getRowCount(); row++) {
 			for (int col = 0; col < getColCount(); col++) {
