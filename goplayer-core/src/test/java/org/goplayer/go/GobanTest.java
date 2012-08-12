@@ -197,4 +197,24 @@ public class GobanTest {
 			}
 		}
 	}
+
+	@Test
+	public void testOutCoords() {
+		Goban goban = new Goban(5, 10);
+
+		// test inner coords
+		for (int row = 0; row < goban.getRowCount(); row++) {
+			for (int col = 0; col < goban.getColCount(); col++) {
+				assertFalse(goban.isOut(new Coord(row, col)));
+			}
+		}
+
+		// test outer coords
+		assertTrue(goban.isOut(new Coord(5, 20)));
+		assertTrue(goban.isOut(new Coord(5, -1)));
+		assertTrue(goban.isOut(new Coord(10, 5)));
+		assertTrue(goban.isOut(new Coord(-1, 5)));
+		assertTrue(goban.isOut(new Coord(-3, -2)));
+		assertTrue(goban.isOut(new Coord(13, 208)));
+	}
 }

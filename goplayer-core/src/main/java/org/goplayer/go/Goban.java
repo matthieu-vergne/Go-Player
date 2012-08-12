@@ -111,4 +111,9 @@ public class Goban {
 		}
 		return clone;
 	}
+
+	public boolean isOut(Coord coord) {
+		return coord.getRow() >= getRowCount() || coord.getRow() < 0
+				|| coord.getCol() >= getColCount() || coord.getCol() < 0;
+	}
 }
